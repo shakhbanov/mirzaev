@@ -1,0 +1,19 @@
+name: IndexNow ping
+
+on:
+  # Run after the gh-pages deployment finishes.
+  page_build:
+  # Manual fallback.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Submit sitemap URLs to IndexNow
+        run: bash scripts/indexnow.sh
