@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Страница не найдена — Доктор Мирзаев</title>
+<style>
+.nf {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 64px 24px;
+}
+.nf__code {
+  font-family: var(--font-serif);
+  font-size: clamp(96px, 18vw, 220px);
+  line-height: 1;
+  color: var(--teal);
+  letter-spacing: -0.04em;
+}
+.nf__title {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 44px);
+  margin-top: 16px;
+  line-height: 1.1;
+}
+.nf__sub {
+  margin-top: 18px;
+  color: var(--ink-soft);
+  max-width: 480px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+.nf__cta { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<section>
+  <div class="container nf">
+    <div>
+      <div class="nf__code">404</div>
+      <h1 class="nf__title">Такой страницы нет.</h1>
+      <p class="nf__sub">Возможно, ссылка устарела или была введена с ошибкой. Вернитесь на главную или сразу запишитесь на приём.</p>
+      <div class="nf__cta">
+        <a href="/" class="btn btn--lg">На главную <span class="arr">→</span></a>
+        <a href="/online.html" class="btn btn--ghost btn--lg">Записаться</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<div id="site-floater"></div>
+<script src="assets/js/shared.js"></script>
+<script>DM.mount('home');</script>
+</body>
+</html>

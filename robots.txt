@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /uploads/
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://doctor-mirzaev.ru/sitemap.xml
+Host: https://doctor-mirzaev.ru

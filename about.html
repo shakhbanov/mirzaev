@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1f4a47">
+<meta name="format-detection" content="telephone=no">
+<title>О враче — Мирзаев Заур Айдинович, уролог</title>
+<meta name="description" content="Мирзаев Заур Айдинович — врач-уролог, к.м.н., оперирующий хирург. Образование, опыт, принципы работы и сертификаты.">
+<link rel="canonical" href="https://doctor-mirzaev.ru/about.html">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Доктор Мирзаев">
+<meta property="og:url" content="https://doctor-mirzaev.ru/about.html">
+<meta property="og:title" content="О враче — Мирзаев Заур Айдинович, уролог">
+<meta property="og:description" content="Мирзаев Заур Айдинович — врач-уролог, к.м.н., оперирующий хирург. Образование, опыт, принципы работы и сертификаты.">
+<meta property="og:image" content="https://doctor-mirzaev.ru/assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="О враче — Мирзаев Заур Айдинович, уролог">
+<meta name="twitter:description" content="Мирзаев Заур Айдинович — врач-уролог, к.м.н., оперирующий хирург. Образование, опыт, принципы работы и сертификаты.">
+<meta name="twitter:image" content="https://doctor-mirzaev.ru/assets/img/og.jpg">
+<style>
+.about-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+@media (max-width: 900px) { .about-hero { grid-template-columns: 1fr; gap: 32px; } }
+.about-hero__photo { aspect-ratio: 4/5; border-radius: 22px; position: relative; overflow: hidden; }
+.about-hero__photo .photo-ph { position: absolute; inset: 0; }
+.about-hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+@media (max-width: 720px) { .facts { grid-template-columns: repeat(2, 1fr); } }
+.fact { padding: 28px; border-right: 1px solid var(--line); }
+.fact:last-child { border-right: 0; }
+@media (max-width: 720px) {
+  .fact:nth-child(2) { border-right: 0; }
+  .fact:nth-child(1), .fact:nth-child(2) { border-bottom: 1px solid var(--line); }
+}
+.fact .num { font-family: var(--font-serif); font-size: 56px; line-height: 1; color: var(--teal); }
+.fact .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 12px; }
+
+.cv-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 28px 0; border-top: 1px solid var(--line-soft); }
+.cv-row:first-child { border-top: 0; }
+@media (max-width: 720px) { .cv-row { grid-template-columns: 1fr; gap: 8px; } }
+.cv-year { font-family: var(--font-mono); font-size: 13px; color: var(--teal); letter-spacing: 0.06em; padding-top: 4px; }
+.cv-title { font-family: var(--font-serif); font-size: 24px; line-height: 1.2; }
+.cv-org { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.cv-desc { font-size: 14px; color: var(--ink-soft); margin-top: 10px; max-width: 600px; }
+
+.creds { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 800px) { .creds { grid-template-columns: repeat(2, 1fr); } }
+.cred {
+  aspect-ratio: 3/4;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background:
+    repeating-linear-gradient(135deg, rgba(31,74,71,0.05) 0 1px, transparent 1px 14px),
+    var(--bg-elevated);
+  padding: 18px;
+  display: flex; flex-direction: column;
+  position: relative;
+}
+.cred .seal {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--teal);
+  margin-bottom: auto;
+}
+.cred h4 { font-family: var(--font-serif); font-size: 18px; line-height: 1.2; margin-top: 12px; }
+.cred span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--muted); margin-top: 6px; text-transform: uppercase; }
+
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+@media (max-width: 800px) { .principles { grid-template-columns: 1fr; } }
+.principle { padding: 32px 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.principle:last-child { border-right: 0; }
+@media (max-width: 800px) { .principle { border-right: 0; } }
+.principle .num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--teal); }
+.principle h4 { font-family: var(--font-serif); font-size: 26px; margin-top: 20px; line-height: 1.15; }
+.principle p { font-size: 14px; color: var(--ink-soft); margin-top: 14px; line-height: 1.6; }
+
+.quote-block {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.6vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  max-width: 860px;
+  position: relative;
+  padding-left: 60px;
+}
+.quote-block::before {
+  content: "\201C";
+  position: absolute;
+  left: 0; top: -10px;
+  font-size: 100px;
+  color: var(--teal);
+  line-height: 1;
+}
+.quote-block em { color: var(--teal); font-style: italic; }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="page-intro">
+  <div class="container">
+    <span class="eyebrow eyebrow-dot">О враче</span>
+    <div class="about-hero" style="margin-top: 32px;">
+      <div>
+        <h1 class="page-intro__title">Мирзаев<br>Заур<br>Айдинович</h1>
+        <p class="page-intro__sub">Врач-уролог, оперирующий хирург. Кандидат медицинских наук. Более 100 проведённых операций. Автор научных работ по урологии, включая исследования по хирургии стриктур уретры.</p>
+        <div style="margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <span class="chip chip--teal">Уролог</span>
+          <span class="chip chip--teal">Оперирующий хирург</span>
+          <span class="chip chip--sand">К.м.н.</span>
+          <span class="chip">Хирургия стриктур уретры</span>
+        </div>
+      </div>
+      <div class="about-hero__photo reveal">
+        <img src="assets/img/doctor.jpg" alt="Мирзаев З.А. — уролог" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top: 56px;">
+  <div class="container">
+    <div class="facts">
+      <div class="fact"><div class="num">100+</div><div class="lbl">проведённых операций</div></div>
+      <div class="fact"><div class="num">2018</div><div class="lbl">ординатура по урологии</div></div>
+      <div class="fact"><div class="num">2022</div><div class="lbl">кандидат мед. наук</div></div>
+      <div class="fact"><div class="num">4.9</div><div class="lbl"><a href="https://prodoctorov.ru/rostov-na-donu/vrach/751335-mirzaev/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor;">★ ProDoctorov</a></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head" style="margin-bottom: 40px;">
+      <div>
+        <span class="eyebrow eyebrow-dot">Образование и опыт</span>
+        <h2 style="font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); margin-top: 14px;">Путь, который привёл к сегодняшней практике.</h2>
+      </div>
+    </div>
+
+    <div>
+      <div class="cv-row reveal">
+        <div class="cv-year">2022</div>
+        <div>
+          <div class="cv-title">Кандидатская диссертация</div>
+          <div class="cv-org">Защищена · степень к.м.н.</div>
+          <div class="cv-desc">Научная работа в области клинической медицины и урологии.</div>
+        </div>
+      </div>
+      <div class="cv-row reveal">
+        <div class="cv-year">2018 — 2021</div>
+        <div>
+          <div class="cv-title">Аспирантура · клиническая медицина</div>
+          <div class="cv-org">Научно-исследовательская работа по урологии</div>
+          <div class="cv-desc">Исследования по хирургии стриктур уретры. Подготовка научных публикаций.</div>
+        </div>
+      </div>
+      <div class="cv-row reveal">
+        <div class="cv-year">2016 — 2018</div>
+        <div>
+          <div class="cv-title">Ординатура по урологии</div>
+          <div class="cv-org">Специализация · урология</div>
+          <div class="cv-desc">Клиническая подготовка: амбулаторная и оперативная урология, диагностика и ведение пациентов.</div>
+        </div>
+      </div>
+      <div class="cv-row reveal">
+        <div class="cv-year">2010 — 2016</div>
+        <div>
+          <div class="cv-title">Лечебное дело · Ростовский ГМУ</div>
+          <div class="cv-org">Ростовский государственный медицинский университет</div>
+          <div class="cv-desc">Высшее медицинское образование, специальность «Лечебное дело».</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head" style="margin-bottom: 40px;">
+      <div>
+        <span class="eyebrow eyebrow-dot">Документы и сертификаты</span>
+        <h2 style="font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); margin-top: 14px;">Подтверждение квалификации.</h2>
+      </div>
+    </div>
+    <div class="creds">
+      <div class="cred"><div class="seal"></div><h4>Диплом врача</h4><span>2016 · РостГМУ · лечебное дело</span></div>
+      <div class="cred"><div class="seal"></div><h4>Сертификат уролога</h4><span>2018 · ординатура</span></div>
+      <div class="cred"><div class="seal"></div><h4>Аспирантура</h4><span>2021 · клиническая медицина</span></div>
+      <div class="cred"><div class="seal"></div><h4>Кандидат мед. наук</h4><span>2022</span></div>
+      <div class="cred"><div class="seal"></div><h4>Хирургия стриктур уретры</h4><span>научные публикации</span></div>
+      <div class="cred"><div class="seal"></div><h4>Автор научных работ</h4><span>урология</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="eyebrow eyebrow-dot">Принципы работы</span>
+    <div style="margin-top: 24px; margin-bottom: 56px;">
+      <h2 style="font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); line-height: 1.05; max-width: 800px;">Три вещи, на которых держится мой приём.</h2>
+    </div>
+    <div class="principles">
+      <div class="principle">
+        <div class="num">01</div>
+        <h4>Доказательная медицина</h4>
+        <p>Назначаю только то, что доказало эффективность в клинических исследованиях. Не назначаю «на всякий случай» и БАДы без оснований.</p>
+      </div>
+      <div class="principle">
+        <div class="num">02</div>
+        <h4>Уважение и анонимность</h4>
+        <p>Без оценок, без морализаторства, без лишнего. Что обсуждаем на приёме — остаётся между нами. Это не вежливость — это закон.</p>
+      </div>
+      <div class="principle">
+        <div class="num">03</div>
+        <h4>Понятный план</h4>
+        <p>Вы уходите с письменным заключением и чётким следующим шагом. Если непонятно — объясняю ещё раз и пишу в мессенджер.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head" style="margin-bottom: 40px;">
+      <div>
+        <span class="eyebrow eyebrow-dot">Хирургическая практика</span>
+        <h2 style="font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); margin-top: 14px;">Оперирующий хирург — не только консультирую, но и оперирую.</h2>
+      </div>
+      <p>За плечами более 100 проведённых операций в стационаре. Это значит: на приёме я понимаю, как болезнь выглядит изнутри, и трезво оцениваю — нужна ли вам операция вообще, и если да, то какая.</p>
+    </div>
+    <div class="principles" style="border-top: 1px solid var(--line); border-left: 1px solid var(--line);">
+      <div class="principle">
+        <div class="num">100+</div>
+        <h4>Операций проведено</h4>
+        <p>Открытые и эндоскопические вмешательства в условиях стационара. Опыт ведения пациентов от поступления до выписки.</p>
+      </div>
+      <div class="principle">
+        <div class="num">Спектр</div>
+        <h4>Урологическая хирургия</h4>
+        <p>Операции при МКБ, стриктурах уретры, заболеваниях предстательной железы, варикоцеле, гидроцеле и других урологических патологиях.</p>
+      </div>
+      <div class="principle">
+        <div class="num">Подход</div>
+        <h4>Операция — не первый ответ</h4>
+        <p>Сначала разбираемся, действительно ли вмешательство необходимо. Если да — объясняю риски, альтернативы и реабилитацию до того, как вы примете решение.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="quote-block reveal">
+      Я не лечу диагнозы — я помогаю людям. <em>Урология слишком часто связана со стыдом и страхом</em>, и моя работа — снять и то, и другое, прежде чем мы начнём разбираться с медицинской частью.
+    </div>
+    <div style="margin-top: 32px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">— З.А. Мирзаев</div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta-band reveal" style="background: var(--teal-deep); border: 0; color: #f0ece2;">
+      <div>
+        <span class="eyebrow eyebrow-dot" style="color: var(--sand);">Записаться</span>
+        <h2 style="color: #f0ece2; font-family: var(--font-serif); font-size: clamp(34px, 4.5vw, 52px); line-height: 1.05; margin-top: 14px;">Готовы поговорить?</h2>
+        <p style="color: #b9c8c5; margin-top: 14px; max-width: 480px;">Очно или онлайн — выберите удобный формат. Подтверждение записи в течение часа.</p>
+      </div>
+      <a href="online.html" class="btn btn--lg" style="background: var(--sand); color: var(--teal-deep);">Выбрать время <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<div id="site-floater"></div>
+<script src="assets/js/shared.js"></script>
+<script>DM.mount('about');</script>
+</body>
+</html>

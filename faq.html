@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1f4a47">
+<meta name="format-detection" content="telephone=no">
+<title>FAQ и подготовка к приёму — Доктор Мирзаев</title>
+<meta name="description" content="Частые вопросы, подготовка к приёму уролога, самоопросник IPSS, конфиденциальность.">
+<link rel="canonical" href="https://doctor-mirzaev.ru/faq.html">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Доктор Мирзаев">
+<meta property="og:url" content="https://doctor-mirzaev.ru/faq.html">
+<meta property="og:title" content="FAQ и подготовка к приёму — Доктор Мирзаев">
+<meta property="og:description" content="Частые вопросы, подготовка к приёму уролога, самоопросник IPSS, конфиденциальность.">
+<meta property="og:image" content="https://doctor-mirzaev.ru/assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FAQ и подготовка к приёму — Доктор Мирзаев">
+<meta name="twitter:description" content="Частые вопросы, подготовка к приёму уролога, самоопросник IPSS, конфиденциальность.">
+<meta name="twitter:image" content="https://doctor-mirzaev.ru/assets/img/og.jpg">
+<style>
+.faq-grid { display: grid; grid-template-columns: 280px 1fr; gap: 64px; align-items: start; }
+@media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; gap: 32px; } }
+.faq-side { position: sticky; top: 96px; }
+@media (max-width: 900px) { .faq-side { position: static; } }
+.faq-side ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.faq-side a {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  border: 1px solid transparent;
+  transition: all .15s ease;
+}
+.faq-side a:hover { background: var(--bg-elevated); color: var(--ink); border-color: var(--line); }
+
+.faq-section h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.05;
+  margin-bottom: 24px;
+}
+.faq-section { margin-bottom: 80px; }
+.faq-section:last-child { margin-bottom: 0; }
+
+.qa { border-top: 1px solid var(--line); padding: 22px 0; cursor: pointer; }
+.qa summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.25;
+  cursor: pointer;
+}
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after {
+  content: "+";
+  font-family: var(--font-mono);
+  font-size: 22px;
+  color: var(--teal);
+  flex: none;
+  transition: transform .2s ease;
+}
+.qa[open] summary::after { content: "−"; }
+.qa p { margin-top: 14px; color: var(--ink-soft); font-size: 15px; line-height: 1.65; max-width: 720px; }
+.qa p + p { margin-top: 10px; }
+
+.prep-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (max-width: 720px) { .prep-list { grid-template-columns: 1fr; } }
+.prep-item {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  gap: 16px;
+}
+.prep-item .ico {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(31,74,71,0.08); color: var(--teal);
+  display: grid; place-items: center; flex: none;
+  font-family: var(--font-mono); font-size: 13px;
+}
+.prep-item h4 { font-family: var(--font-serif); font-size: 18px; line-height: 1.2; }
+.prep-item p { font-size: 13px; color: var(--ink-soft); margin-top: 6px; line-height: 1.55; }
+
+/* IPSS */
+.ipss {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 32px;
+}
+.ipss h3 { font-family: var(--font-serif); font-size: 28px; line-height: 1.15; }
+.ipss .q-row { padding: 18px 0; border-top: 1px solid var(--line-soft); }
+.ipss .q-row:first-of-type { border-top: 1px solid var(--line); margin-top: 20px; }
+.ipss .q-text { font-size: 15px; line-height: 1.5; margin-bottom: 12px; }
+.ipss .q-opts { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+@media (max-width: 600px) { .ipss .q-opts { grid-template-columns: repeat(3, 1fr); } }
+.ipss .opt {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+  font-family: var(--font-mono); font-size: 11px;
+  cursor: pointer;
+  transition: all .12s ease;
+}
+.ipss .opt:hover { border-color: var(--teal); }
+.ipss .opt.is-on { background: var(--teal); border-color: var(--teal); color: var(--bg); }
+.ipss .opt strong { display: block; font-size: 16px; font-family: var(--font-serif); }
+.ipss-result {
+  margin-top: 24px;
+  padding: 22px;
+  border-radius: 14px;
+  background: var(--sand-soft);
+  display: none;
+}
+.ipss-result.is-on { display: block; }
+.ipss-result .score { font-family: var(--font-serif); font-size: 56px; line-height: 1; color: var(--teal-deep); }
+.ipss-result .verdict { font-size: 14px; color: #6b5b3a; margin-top: 8px; }
+
+.privacy {
+  background: var(--teal-deep);
+  color: #f0ece2;
+  border-radius: 28px;
+  padding: 56px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+@media (max-width: 800px) { .privacy { grid-template-columns: 1fr; padding: 40px 28px; } }
+.privacy h3 { font-family: var(--font-serif); font-size: clamp(28px, 3.5vw, 40px); line-height: 1.1; color: #f0ece2; }
+.privacy p { color: #b9c8c5; font-size: 15px; line-height: 1.65; margin-top: 16px; }
+.privacy ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.privacy li { display: flex; gap: 14px; align-items: flex-start; font-size: 14px; color: #c8d6d4; }
+.privacy li::before { content:""; width: 6px; height: 6px; background: var(--sand); border-radius: 50%; margin-top: 8px; flex: none; }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="page-intro">
+  <div class="container">
+    <span class="eyebrow eyebrow-dot">FAQ · Подготовка · Самоопросник</span>
+    <h1 class="page-intro__title">Частые вопросы<br>и подготовка<br>к приёму.</h1>
+    <p class="page-intro__sub">Если ответа на ваш вопрос здесь нет — напишите в WhatsApp, отвечу лично.</p>
+  </div>
+</section>
+
+<section style="padding-top: 56px;">
+  <div class="container">
+    <div class="faq-grid">
+      <aside class="faq-side">
+        <ul>
+          <li><a href="#general">Общие вопросы</a></li>
+          <li><a href="#online">Онлайн-консультация</a></li>
+          <li><a href="#prep">Подготовка к приёму</a></li>
+          <li><a href="#ipss">Самоопросник IPSS</a></li>
+          <li><a href="#privacy">Конфиденциальность</a></li>
+        </ul>
+      </aside>
+
+      <div>
+        <div class="faq-section" id="general">
+          <h2>Общие вопросы</h2>
+          <details class="qa" open>
+            <summary>С какого возраста принимаете?</summary>
+            <p>С 18 лет. Подростков и детей по урологическим вопросам направлю к проверенному детскому урологу.</p>
+          </details>
+          <details class="qa">
+            <summary>Принимаете ли женщин?</summary>
+            <p>Да. Урология — специальность для всех. Часто это циститы, рецидивирующие инфекции мочевыделительной системы, мочекаменная болезнь.</p>
+          </details>
+          <details class="qa">
+            <summary>Сколько длится консультация?</summary>
+            <p>Очно — 30–40 минут, онлайн — 30–45 минут. Я не ставлю жёсткий таймер: если нужно дольше — закладываю буфер между приёмами.</p>
+          </details>
+          <details class="qa">
+            <summary>Можно ли прийти без анализов?</summary>
+            <p>Можно. На первичном приёме часто и не нужно — назначу то, что действительно потребуется. Если анализы есть — возьмите с собой, ничего лишнего сдавать заново не стану.</p>
+          </details>
+          <details class="qa">
+            <summary>Какие документы выдаёте?</summary>
+            <p>Письменное заключение с диагнозом, рекомендациями и назначениями. Чек об оплате и справку для работодателя — по запросу.</p>
+          </details>
+        </div>
+
+        <div class="faq-section" id="online">
+          <h2>Онлайн-консультация</h2>
+          <details class="qa">
+            <summary>Это полноценный приём или только разговор?</summary>
+            <p>Полноценный. До встречи я изучаю ваши анализы и описание. На связи — обсуждаем жалобы, разбираем результаты, отвечаю на вопросы. После встречи получаете PDF-заключение и можете писать мне 14 дней.</p>
+          </details>
+          <details class="qa">
+            <summary>Когда онлайн не подойдёт?</summary>
+            <p>При острой боли, температуре выше 38°C, крови в моче, задержке мочи, травмах — срочно очно или в стационар. Также онлайн не заменяет осмотр и УЗИ — если я вижу, что без них не разобраться, скажу прямо.</p>
+          </details>
+          <details class="qa">
+            <summary>Как происходит оплата?</summary>
+            <p>После того, как я подтверждаю свободный слот, отправляю ссылку на оплату. 3 500 ₽ за полную консультацию. Чек приходит автоматически.</p>
+          </details>
+          <details class="qa">
+            <summary>На какой платформе видеозвонок?</summary>
+            <p>Zoom или WhatsApp — на ваш выбор. Ссылка приходит за 30 минут до приёма.</p>
+          </details>
+        </div>
+
+        <div class="faq-section" id="prep">
+          <h2>Подготовка к приёму</h2>
+          <p style="color: var(--ink-soft); margin-bottom: 8px;">Что взять с собой или прислать заранее, чтобы консультация была максимально полезной.</p>
+          <div class="prep-list">
+            <div class="prep-item"><div class="ico">01</div><div><h4>Анализы за 6 мес.</h4><p>Кровь, моча, ПСА, гормоны — что есть. Старше — необязательно.</p></div></div>
+            <div class="prep-item"><div class="ico">02</div><div><h4>УЗИ / КТ / МРТ</h4><p>Снимки или диск, описание. Снимки важнее текста.</p></div></div>
+            <div class="prep-item"><div class="ico">03</div><div><h4>Список препаратов</h4><p>Что принимаете сейчас и что принимали по этой проблеме раньше.</p></div></div>
+            <div class="prep-item"><div class="ico">04</div><div><h4>Краткое описание</h4><p>2–3 предложения: что беспокоит, как давно, что усиливает / уменьшает.</p></div></div>
+            <div class="prep-item"><div class="ico">05</div><div><h4>Дневник симптомов</h4><p>Если есть — частота мочеиспускания, ночные подъёмы, болевые эпизоды.</p></div></div>
+            <div class="prep-item"><div class="ico">06</div><div><h4>Заключения врачей</h4><p>Если уже были у других специалистов — пригодится для второго мнения.</p></div></div>
+          </div>
+        </div>
+
+        <div class="faq-section" id="ipss">
+          <h2>Самоопросник IPSS</h2>
+          <p style="color: var(--ink-soft); margin-bottom: 16px;">Международная шкала оценки симптомов нижних мочевых путей. Анонимно, занимает 2 минуты. Результат — ориентир, а не диагноз.</p>
+
+          <div class="ipss" id="ipss">
+            <h3>За последний месяц, как часто вы…</h3>
+            <div id="ipss-questions"></div>
+            <div class="ipss-result" id="ipss-result">
+              <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: #6b5b3a; text-transform: uppercase;">Ваш балл IPSS</div>
+              <div class="score" id="ipss-score">—</div>
+              <div class="verdict" id="ipss-verdict"></div>
+              <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="online.html" class="btn">Обсудить результат <span class="arr">→</span></a>
+                <button class="btn btn--ghost" onclick="resetIPSS()">Пройти заново</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-section" id="privacy">
+          <h2 style="margin-bottom: 0;">Конфиденциальность</h2>
+        </div>
+        <div class="privacy">
+          <div>
+            <h3>Что обсуждаем — остаётся между нами.</h3>
+            <p>Это не вежливая фраза, а закон: врачебная тайна охраняется ст. 13 ФЗ № 323. Но за словом «закон» стоит ещё одно — отношение. Я работаю так, чтобы ни один пациент не пожалел, что обратился.</p>
+          </div>
+          <ul>
+            <li>В зале ожидания нет фамилий — только время приёма</li>
+            <li>В заключении нет того, что вы попросили не писать</li>
+            <li>Анализы храню в защищённом облаке, не в мессенджерах</li>
+            <li>Работодателю / страховой — только с вашего согласия</li>
+            <li>Записи звонков не делаю и не храню</li>
+            <li>На приёме — только мы двое, без ассистентов</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<div id="site-floater"></div>
+<script src="assets/js/shared.js"></script>
+<script>
+  DM.mount('faq');
+
+  const IPSS_QS = [
+    'не могли полностью опорожнить мочевой пузырь?',
+    'мочились повторно менее чем через 2 часа?',
+    'прерывали и снова начинали мочеиспускание?',
+    'было трудно сдерживать позыв?',
+    'отмечали слабую струю мочи?',
+    'натуживались, чтобы начать мочеиспускание?',
+    'просыпались ночью для мочеиспускания (раз)?'
+  ];
+  const LABELS = ['никогда','реже 1/5','реже 1/2','около 1/2','чаще 1/2','почти всегда'];
+  const VALS = [0,1,2,3,4,5];
+
+  const ipssQ = document.getElementById('ipss-questions');
+  const answers = new Array(IPSS_QS.length).fill(null);
+
+  IPSS_QS.forEach((q, qi) => {
+    const row = document.createElement('div');
+    row.className = 'q-row';
+    const opts = LABELS.map((l, i) =>
+      `<div class="opt" data-q="${qi}" data-v="${VALS[i]}"><strong>${VALS[i]}</strong>${l}</div>`
+    ).join('');
+    row.innerHTML = `<div class="q-text">${qi+1}. ${q}</div><div class="q-opts">${opts}</div>`;
+    ipssQ.appendChild(row);
+  });
+
+  ipssQ.addEventListener('click', (e) => {
+    const opt = e.target.closest('.opt');
+    if (!opt) return;
+    const qi = +opt.dataset.q;
+    const v = +opt.dataset.v;
+    answers[qi] = v;
+    ipssQ.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(o => o.classList.remove('is-on'));
+    opt.classList.add('is-on');
+    if (answers.every(a => a !== null)) showResult();
+  });
+
+  function showResult() {
+    const total = answers.reduce((a,b)=>a+b,0);
+    let v = '';
+    if (total <= 7) v = 'Лёгкая симптоматика. Скорее всего, повода для тревоги нет — но ежегодный чек-ап после 45 лет всё равно полезен.';
+    else if (total <= 19) v = 'Умеренная симптоматика. Стоит обсудить с урологом — не для того, чтобы пугать, а чтобы понять причину и подобрать поддержку.';
+    else v = 'Выраженная симптоматика. Имеет смысл записаться на консультацию в ближайшее время — и очно, и онлайн подойдут как первый шаг.';
+    document.getElementById('ipss-score').textContent = total + ' / 35';
+    document.getElementById('ipss-verdict').textContent = v;
+    document.getElementById('ipss-result').classList.add('is-on');
+  }
+
+  function resetIPSS() {
+    answers.fill(null);
+    document.querySelectorAll('.ipss .opt.is-on').forEach(o => o.classList.remove('is-on'));
+    document.getElementById('ipss-result').classList.remove('is-on');
+  }
+  window.resetIPSS = resetIPSS;
+</script>
+</body>
+</html>

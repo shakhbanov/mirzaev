@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1f4a47">
+<meta name="format-detection" content="telephone=no">
+<title>Онлайн-консультация уролога · 3 500 ₽ — Доктор Мирзаев</title>
+<meta name="description" content="Видеоконсультация 30–45 мин, изучение анализов, письменное заключение, переписка 14 дней. Онлайн-приём уролога Мирзаева.">
+<link rel="canonical" href="https://doctor-mirzaev.ru/online.html">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="Доктор Мирзаев">
+<meta property="og:url" content="https://doctor-mirzaev.ru/online.html">
+<meta property="og:title" content="Онлайн-консультация уролога · 3 500 ₽ — Доктор Мирзаев">
+<meta property="og:description" content="Видеоконсультация 30–45 мин, изучение анализов, письменное заключение, переписка 14 дней. Онлайн-приём уролога Мирзаева.">
+<meta property="og:image" content="https://doctor-mirzaev.ru/assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Онлайн-консультация уролога · 3 500 ₽ — Доктор Мирзаев">
+<meta name="twitter:description" content="Видеоконсультация 30–45 мин, изучение анализов, письменное заключение, переписка 14 дней. Онлайн-приём уролога Мирзаева.">
+<meta name="twitter:image" content="https://doctor-mirzaev.ru/assets/img/og.jpg">
+<style>
+.online-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; }
+@media (max-width: 980px) { .online-grid { grid-template-columns: 1fr; } }
+
+.booking {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 36px;
+  position: sticky;
+  top: 96px;
+}
+@media (max-width: 980px) { .booking { position: static; padding: 28px; } }
+.booking h3 { font-family: var(--font-serif); font-size: 28px; line-height: 1.1; }
+.booking__price { display: flex; align-items: baseline; gap: 10px; margin-top: 14px; padding-bottom: 24px; border-bottom: 1px solid var(--line-soft); }
+.booking__price .v { font-family: var(--font-serif); font-size: 56px; line-height: 1; }
+.booking__price .c { color: var(--muted); font-size: 14px; }
+
+.step-h { display: flex; gap: 12px; align-items: center; margin: 24px 0 14px; }
+.step-h .n { width: 24px; height: 24px; border-radius: 50%; background: var(--teal); color: var(--bg); display: grid; place-items: center; font-size: 12px; font-family: var(--font-mono); }
+.step-h h4 { font-size: 14px; font-family: var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); font-weight: 500; }
+
+.dates { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; }
+.date {
+  flex: none;
+  min-width: 64px;
+  text-align: center;
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+  border-radius: 12px;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.date small { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: block; }
+.date strong { font-family: var(--font-serif); font-size: 22px; display: block; line-height: 1.1; margin-top: 4px; }
+.date span { font-size: 11px; color: var(--muted); }
+.date.is-selected { background: var(--teal); border-color: var(--teal); color: var(--bg); }
+.date.is-selected small, .date.is-selected span { color: rgba(255,255,255,0.75); }
+
+.summary {
+  margin-top: 28px;
+  padding: 18px;
+  background: var(--bg);
+  border-radius: 14px;
+  border: 1px dashed var(--line);
+  font-size: 13px;
+  color: var(--ink-soft);
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+.summary strong { font-family: var(--font-serif); font-size: 18px; color: var(--ink); }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
+.fields { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+
+.confirm-msg {
+  margin-top: 18px;
+  padding: 18px;
+  background: rgba(31,74,71,0.06);
+  border: 1px solid rgba(31,74,71,0.18);
+  border-radius: 14px;
+  color: var(--teal);
+  font-size: 14px;
+  display: none;
+}
+.confirm-msg.is-on { display: block; animation: fadein .3s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+
+.benefits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  margin-top: 32px;
+}
+@media (max-width: 720px) { .benefits { grid-template-columns: 1fr; } }
+.benefit { padding: 28px 0; border-bottom: 1px solid var(--line); padding-right: 32px; }
+.benefit:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 32px; padding-left: 0; }
+.benefit:nth-child(even) { padding-left: 32px; padding-right: 0; }
+@media (max-width: 720px) { .benefit { padding: 24px 0 !important; border-right: 0 !important; } }
+.benefit .ico { color: var(--teal); margin-bottom: 14px; }
+.benefit h4 { font-family: var(--font-serif); font-size: 22px; line-height: 1.15; }
+.benefit p { color: var(--ink-soft); font-size: 14px; margin-top: 10px; line-height: 1.55; }
+
+.timeline { margin-top: 32px; }
+.timeline-item {
+  display: grid; grid-template-columns: 56px 1fr; gap: 22px;
+  padding: 24px 0;
+  border-top: 1px solid var(--line-soft);
+  position: relative;
+}
+.timeline-item:first-child { border-top: 0; }
+.tl-time {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--teal);
+  letter-spacing: 0.06em;
+  padding-top: 4px;
+}
+.tl-title { font-family: var(--font-serif); font-size: 22px; line-height: 1.2; }
+.tl-desc { color: var(--ink-soft); font-size: 14px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="page-intro">
+  <div class="container">
+    <span class="eyebrow eyebrow-dot">Онлайн-консультация · 3 500 ₽</span>
+    <h1 class="page-intro__title">Полноценный<br>приём — там,<br>где удобно вам.</h1>
+    <p class="page-intro__sub">Видеосвязь 30–45 минут, изучение анализов до встречи, письменное заключение и переписка со мной 14 дней после консультации.</p>
+  </div>
+</section>
+
+<section style="padding-top: 56px;">
+  <div class="container">
+    <div class="online-grid">
+      <div>
+        <h2 style="font-family: var(--font-serif); font-size: clamp(32px, 4vw, 44px); line-height: 1.1;">Когда онлайн — это правильный выбор.</h2>
+        <div class="benefits">
+          <div class="benefit">
+            <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 9l7-3v12l-7-3M3 6h11v12H3z"/></svg></div>
+            <h4>Разбор анализов</h4>
+            <p>Сданы вне моего города или для второго мнения — присылаете заранее, я успеваю изучить.</p>
+          </div>
+          <div class="benefit">
+            <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 11l3 3 7-7"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg></div>
+            <h4>Второе мнение</h4>
+            <p>Уже есть диагноз и план, но хочется проверить. Скажу честно — согласен или нет.</p>
+          </div>
+          <div class="benefit">
+            <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"/></svg></div>
+            <h4>Деликатные темы</h4>
+            <p>Когда тяжело идти лично. Анонимность и спокойная обстановка дома помогают разговору.</p>
+          </div>
+          <div class="benefit">
+            <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <h4>Контроль терапии</h4>
+            <p>Назначен курс — нужно проверить динамику. Без необходимости приезжать на повторный приём.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 64px; font-family: var(--font-serif); font-size: clamp(28px, 3.4vw, 38px);">Как пройдёт ваш приём</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-time">−24 ч</div>
+            <div>
+              <div class="tl-title">Подтверждение и материалы</div>
+              <div class="tl-desc">После записи получаете подтверждение и ссылку, куда прислать анализы, выписки, фото — что есть. Я изучаю до встречи.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-time">0:00</div>
+            <div>
+              <div class="tl-title">Видеосвязь</div>
+              <div class="tl-desc">Подключаемся в Zoom или WhatsApp. Обсуждаем жалобы, разбираем анализы, отвечаю на вопросы. Без таймера и спешки.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-time">+2 ч</div>
+            <div>
+              <div class="tl-title">Письменное заключение</div>
+              <div class="tl-desc">Получаете PDF: формулировка проблемы, план обследования или лечения, маршрутизация. Что показать другому врачу.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-time">+14 д</div>
+            <div>
+              <div class="tl-title">Связь со мной</div>
+              <div class="tl-desc">В WhatsApp. Уточнения, новые анализы, вопросы по терапии — без доплат в течение двух недель.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="booking">
+        <h3>Записаться</h3>
+        <div class="booking__price">
+          <span class="v">3 500 <small style="font-size:24px; color:var(--muted)">₽</small></span>
+          <span class="c">за полный приём</span>
+        </div>
+
+        <div class="step-h"><span class="n">1</span><h4>Выберите день</h4></div>
+        <div class="dates" id="dates"></div>
+
+        <div class="step-h"><span class="n">2</span><h4>Свободное время</h4></div>
+        <div class="slots" id="slots"></div>
+
+        <div class="step-h"><span class="n">3</span><h4>Контакты</h4></div>
+        <form class="fields" id="bookform">
+          <div class="field"><label>Имя</label><input type="text" placeholder="Как к вам обращаться" required></div>
+          <div class="field-row">
+            <div class="field"><label>Телефон</label><input type="tel" placeholder="+7" required></div>
+            <div class="field"><label>WhatsApp</label><input type="text" placeholder="+7..."></div>
+          </div>
+          <div class="field"><label>Кратко о ситуации</label><textarea placeholder="Что беспокоит, есть ли анализы — пара предложений достаточно"></textarea></div>
+
+          <div class="summary" id="summary">
+            <span>Выбрано: <strong id="sumtxt">—</strong></span>
+            <span class="mono" style="font-size:12px; color:var(--muted);">3 500 ₽</span>
+          </div>
+
+          <button type="submit" class="btn btn--lg btn--block">Подтвердить запись <span class="arr">→</span></button>
+          <p class="muted" style="font-size:11px; text-align:center; margin-top:6px;">Нажимая, вы соглашаетесь с обработкой персональных данных. Оплата — после подтверждения слота.</p>
+
+          <div class="confirm-msg" id="confirm">
+            <strong>Заявка принята.</strong><br>
+            Свяжусь с вами в WhatsApp для подтверждения слота в течение часа.
+          </div>
+        </form>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<div id="site-floater"></div>
+<script src="assets/js/shared.js"></script>
+<script>
+  DM.mount('online');
+
+  // Build dates (next 14 days)
+  const datesEl = document.getElementById('dates');
+  const slotsEl = document.getElementById('slots');
+  const sumtxt = document.getElementById('sumtxt');
+  const months = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+  const days = ['вс','пн','вт','ср','чт','пт','сб'];
+  const today = new Date();
+  let selectedDate = null;
+  let selectedSlot = null;
+
+  for (let i = 1; i <= 14; i++) {
+    const d = new Date(today); d.setDate(today.getDate() + i);
+    const isWeekend = d.getDay() === 0 || d.getDay() === 6;
+    const el = document.createElement('div');
+    el.className = 'date';
+    el.innerHTML = `<small>${days[d.getDay()]}</small><strong>${d.getDate()}</strong><span>${months[d.getMonth()]}</span>`;
+    el.dataset.iso = d.toISOString().slice(0,10);
+    el.dataset.label = `${d.getDate()} ${months[d.getMonth()]}`;
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.date').forEach(x => x.classList.remove('is-selected'));
+      el.classList.add('is-selected');
+      selectedDate = el.dataset.label;
+      selectedSlot = null;
+      renderSlots(isWeekend);
+      updateSum();
+    });
+    datesEl.appendChild(el);
+    if (i === 1) el.click();
+  }
+
+  function renderSlots(isWeekend) {
+    const all = ['10:00','10:45','11:30','12:15','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15'];
+    slotsEl.innerHTML = '';
+    all.forEach((t, i) => {
+      const s = document.createElement('div');
+      s.className = 'slot';
+      s.textContent = t;
+      // randomly disable a few to look real
+      const seed = (selectedDate + t).split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+      const off = (seed % 5 === 0) || (isWeekend && i > 7);
+      if (off) s.classList.add('is-disabled');
+      else s.addEventListener('click', () => {
+        document.querySelectorAll('.slot').forEach(x => x.classList.remove('is-selected'));
+        s.classList.add('is-selected');
+        selectedSlot = t;
+        updateSum();
+      });
+      slotsEl.appendChild(s);
+    });
+  }
+
+  function updateSum() {
+    if (selectedDate && selectedSlot) sumtxt.textContent = `${selectedDate} · ${selectedSlot}`;
+    else if (selectedDate) sumtxt.textContent = `${selectedDate} · выберите время`;
+    else sumtxt.textContent = '—';
+  }
+
+  document.getElementById('bookform').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!selectedDate || !selectedSlot) {
+      sumtxt.textContent = 'Выберите дату и время';
+      return;
+    }
+    document.getElementById('confirm').classList.add('is-on');
+    setTimeout(() => { document.getElementById('confirm').scrollIntoView({behavior:'smooth', block:'nearest'}); }, 100);
+  });
+</script>
+</body>
+</html>
