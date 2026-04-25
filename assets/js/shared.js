@@ -189,7 +189,44 @@
       if (burger) burger.addEventListener('click', () => drawer.classList.contains('is-open') ? close() : open());
       if (closeBtn) closeBtn.addEventListener('click', close);
       if (drawer) drawer.querySelectorAll('.mobile-nav__list a').forEach(a => a.addEventListener('click', close));
+      mobileCTA(activeKey);
       reveal();
     },
   };
+
+  // ---- Sticky bottom CTA on mobile ---------------------------------
+  // Appears after the user scrolls past 60% of the viewport height,
+  // hides while the mobile drawer is open or while the user is on the
+  // booking page itself (where the form is the primary action).
+  function mobileCTA(activeKey) {
+    if (window.matchMedia('(min-width: 721px)').matches) return;
+    if (activeKey === 'online' || activeKey === 'contacts') return;
+
+    const html =
+      '<div class="mobile-cta" id="mobileCta" role="region" aria-label="Запись на приём">' +
+        '<div class="mobile-cta__inner">' +
+          '<div class="mobile-cta__txt"><strong>Онлайн-консультация · 3 500 ₽</strong>Видео 30–45 мин · заключение · 14 дней связи</div>' +
+          '<a href="online.html" class="btn">Записаться <span class="arr" aria-hidden="true">→</span></a>' +
+        '</div>' +
+      '</div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+    document.body.classList.add('has-mobile-cta');
+    const bar = document.getElementById('mobileCta');
+    const drawer = document.getElementById('mobileNav');
+
+    const trigger = () => Math.max(window.innerHeight * 0.6, 320);
+    function update() {
+      if (!bar) return;
+      // hide while the mobile drawer is open
+      if (drawer && drawer.classList.contains('is-open')) {
+        bar.classList.remove('is-shown');
+        return;
+      }
+      if (window.scrollY > trigger()) bar.classList.add('is-shown');
+      else bar.classList.remove('is-shown');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  }
 })();
