@@ -2,6 +2,24 @@ User-agent: *
 Allow: /
 Disallow: /uploads/
 
+User-agent: Yandex
+Allow: /
+Disallow: /uploads/
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&gclid&fbclid&_openstat&from&ref
+Crawl-delay: 1
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: YandexImages
+Allow: /assets/img/
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/img/
+
 User-agent: GPTBot
 Allow: /
 
@@ -9,6 +27,12 @@ User-agent: ClaudeBot
 Allow: /
 
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://doctor-mirzaev.ru/sitemap.xml
