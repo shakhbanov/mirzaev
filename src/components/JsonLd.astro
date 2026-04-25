@@ -1,0 +1,10 @@
+---
+/**
+ * Inline JSON-LD <script> emitter. Pass a single object or array of objects.
+ * Astro keeps the JSON intact (no template-string escaping issues).
+ */
+interface Props { data: unknown }
+const { data } = Astro.props;
+const json = JSON.stringify(data);
+---
+<script type="application/ld+json" set:html={json} />

@@ -1,3 +1,8 @@
+# Build / deps
+node_modules/
+dist/
+.astro/
+
 # OS
 .DS_Store
 Thumbs.db

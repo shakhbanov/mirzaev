@@ -1,0 +1,20 @@
+---
+// IntersectionObserver-based reveal-on-scroll. Adds .is-in to .reveal elements when visible.
+// One observer per page, no per-element JS.
+---
+<script>
+  const els = document.querySelectorAll<HTMLElement>('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(e => e.classList.add('is-in'));
+  } else {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    els.forEach(e => io.observe(e));
+  }
+</script>

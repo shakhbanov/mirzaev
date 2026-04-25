@@ -1,0 +1,28 @@
+---
+// Cookie consent banner — shows once, persisted in localStorage.
+---
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Уведомление о cookie" hidden>
+  <div class="cookie-banner__inner">
+    <p class="cookie-banner__text">Мы используем на сайте куки. В интернете без них никак.</p>
+    <button class="btn cookie-banner__btn" id="cookieAccept" type="button">Согласен</button>
+  </div>
+</div>
+
+<script>
+  const KEY = 'dm_cookie_ok';
+  const banner = document.getElementById('cookieBanner');
+  const accept = document.getElementById('cookieAccept');
+
+  try {
+    if (banner && !localStorage.getItem(KEY)) {
+      banner.hidden = false;
+      requestAnimationFrame(() => banner.classList.add('is-shown'));
+    }
+  } catch { /* localStorage may be unavailable in private mode — silently skip */ }
+
+  accept?.addEventListener('click', () => {
+    try { localStorage.setItem(KEY, '1'); } catch {}
+    banner?.classList.remove('is-shown');
+    setTimeout(() => banner?.remove(), 300);
+  });
+</script>

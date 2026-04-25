@@ -1,0 +1,42 @@
+---
+import Base from '~/layouts/Base.astro';
+---
+
+<Base title={`Страница не найдена — Доктор Мирзаев, уролог в Ростове-на-Дону`} description={`Страница не найдена. Вернитесь на главную или запишитесь на онлайн-консультацию уролога Мирзаева.`} robots="noindex, follow">
+
+<section>
+  <div class="container nf">
+    <div>
+      <div class="nf__code" aria-hidden="true">404</div>
+      <h1 class="nf__title">Такой страницы нет.</h1>
+      <p class="nf__sub">Возможно, ссылка устарела или была введена с ошибкой. Вернитесь на главную или сразу запишитесь на приём — очный в Ростове-на-Дону или онлайн.</p>
+      <div class="nf__cta">
+        <a href="/" class="btn btn--lg">На главную <span class="arr" aria-hidden="true">→</span></a>
+        <a href="/online" class="btn btn--ghost btn--lg">Записаться</a>
+      </div>
+      <div class="nf__links">
+        <a href="/services">Услуги</a>
+        <a href="/prostatitis">Простатит</a>
+        <a href="/prostate-adenoma">Аденома простаты</a>
+        <a href="/kidney-stones">Камни в почках</a>
+        <a href="/erectile-dysfunction">Эректильная дисфункция</a>
+        <a href="/cystitis">Цистит</a>
+        <a href="/faq">FAQ</a>
+        <a href="/contacts">Контакты</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</Base>
+
+<style>
+.nf { min-height: 70vh; display: grid; place-items: center; text-align: center; padding: 64px 24px; }
+.nf__code { font-family: var(--font-serif); font-size: clamp(96px, 18vw, 220px); line-height: 1; color: var(--teal); letter-spacing: -0.04em; }
+.nf__title { font-family: var(--font-serif); font-size: clamp(28px, 4vw, 44px); margin-top: 16px; line-height: 1.1; }
+.nf__sub { margin-top: 18px; color: var(--ink-soft); max-width: 540px; font-size: 17px; line-height: 1.55; }
+.nf__cta { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.nf__links { margin-top: 40px; display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; }
+.nf__links a { color: var(--muted); border-bottom: 1px dotted var(--line); padding-bottom: 2px; }
+.nf__links a:hover { color: var(--teal); border-bottom-color: var(--teal); }
+</style>

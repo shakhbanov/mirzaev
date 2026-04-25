@@ -1,0 +1,57 @@
+---
+import { DISEASES, SITE } from '~/lib/site';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="/" class="brand" aria-label="На главную">
+          <span class="brand__mark" aria-hidden="true">М</span>
+          <span class="brand__name">
+            <span>{SITE.doctor.fullName}</span>
+            <small>УРОЛОГ · К.М.Н.</small>
+          </span>
+        </a>
+        <p style="margin-top:18px; font-size:14px; max-width:340px; line-height:1.6;">
+          Очный приём в Ростове-на-Дону ({SITE.clinic.name}, {SITE.clinic.streetAddress}) и онлайн-консультации по всей России.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Разделы</h5>
+        <ul>
+          <li><a href="/about">О враче</a></li>
+          <li><a href="/services">Услуги</a></li>
+          <li><a href="/online">Онлайн-консультация</a></li>
+          <li><a href="/reviews">Отзывы</a></li>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="/contacts">Контакты</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Направления</h5>
+        <ul>
+          {DISEASES.map(d => <li><a href={d.href}>{d.label}</a></li>)}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Связаться</h5>
+        <ul>
+          <li><a href={`tel:${SITE.contacts.phoneE164}`}>{SITE.contacts.phone}</a></li>
+          <li><a href={SITE.contacts.whatsapp} target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href={SITE.contacts.instagram} target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href={SITE.contacts.prodoctorov} target="_blank" rel="noopener">ProDoctorov</a></li>
+          <li><a href="/contacts">Все контакты</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {year} doctor-mirzaev.ru · Ростов-на-Дону · Принимаю пациентов из Ростовской области</span>
+      <span>18+</span>
+    </div>
+  </div>
+</footer>

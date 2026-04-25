@@ -1,0 +1,315 @@
+---
+import Base from '~/layouts/Base.astro';
+import { SITE } from '~/lib/site';
+
+const title = 'Уролог в Ростове-на-Дону — Мирзаев Заур, к.м.н. · Очный приём и онлайн';
+const description = 'Мирзаев Заур Айдинович — врач-уролог, к.м.н. в Ростове-на-Дону. Очный приём в ГКБ № 20 и онлайн-консультации. Доказательная медицина, конфиденциальность, 4.9★ ProDoctorov.';
+
+const physicianLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Physician',
+  '@id': `${SITE.url}/#physician`,
+  name: SITE.doctor.fullName,
+  alternateName: ['Доктор Мирзаев', 'Уролог Мирзаев'],
+  honorificSuffix: SITE.doctor.titleSuffix,
+  jobTitle: SITE.doctor.jobTitle,
+  url: SITE.url,
+  image: `${SITE.url}/assets/img/doctor.jpg`,
+  medicalSpecialty: SITE.doctor.specialty,
+  knowsLanguage: ['ru'],
+  knowsAbout: [
+    'Урология', 'Простатит', 'Аденома простаты (ДГПЖ)', 'Мочекаменная болезнь',
+    'Эректильная дисфункция', 'Цистит', 'Пиелонефрит',
+    'Стриктура уретры', 'Уретропластика', 'Мужское бесплодие',
+    'ТРУЗИ простаты', 'Цистоскопия', 'Контактная литотрипсия',
+  ],
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: SITE.doctor.alumniOf,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: SITE.clinic.locality,
+      addressRegion: SITE.clinic.region,
+      addressCountry: SITE.clinic.country,
+    },
+  },
+  telephone: SITE.contacts.phoneE164,
+  email: SITE.contacts.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.clinic.streetAddress,
+    addressLocality: SITE.clinic.locality,
+    addressRegion: SITE.clinic.region,
+    postalCode: SITE.clinic.postalCode,
+    addressCountry: SITE.clinic.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: SITE.clinic.geo.lat, longitude: SITE.clinic.geo.lng },
+  openingHoursSpecification: [{
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: 'Friday',
+    opens: '14:00',
+    closes: '20:00',
+  }],
+  sameAs: [SITE.contacts.prodoctorov, SITE.contacts.instagram],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: SITE.doctor.rating,
+    bestRating: 5,
+    ratingCount: SITE.doctor.ratingCount,
+  },
+};
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: SITE.url,
+  name: SITE.name,
+  inLanguage: 'ru-RU',
+  publisher: { '@id': `${SITE.url}/#physician` },
+};
+
+const services = [
+  { href: '/services#mks',         num: '01 / 06', desc: 'Камни в почках и мочеточниках, профилактика рецидивов, метафилактика.', title: 'Мочекаменная<br>болезнь' },
+  { href: '/services#prostate',    num: '02 / 06', desc: 'Простатит, аденома, наблюдение и медикаментозная терапия.',             title: 'Здоровье<br>простаты' },
+  { href: '/services#mens',        num: '03 / 06', desc: 'Эректильная дисфункция, мужское бесплодие, гормональные нарушения.',     title: 'Мужское<br>здоровье' },
+  { href: '/services#infections',  num: '04 / 06', desc: 'ИППП, циститы, пиелонефриты, диагностика и лечение.',                    title: 'Инфекции<br>и воспаления' },
+  { href: '/services#online',      num: '05 / 06', desc: 'Разбор анализов, второе мнение, ведение пациента дистанционно.',          title: 'Онлайн-<br>консультация' },
+  { href: '/services#prevention',  num: '06 / 06', desc: 'Чек-ап мужского здоровья после 40 — раз в год, 30 минут.',                title: 'Профилактика<br>и чек-апы' },
+];
+
+const themes = [
+  { href: '/prostatitis',          tag: 'Простатит',       desc: 'Острый и хронический простатит — диагностика, антибиотикотерапия, профилактика рецидивов.', title: 'Лечение простатита<br>в Ростове-на-Дону' },
+  { href: '/prostate-adenoma',     tag: 'ДГПЖ',            desc: 'Аденома простаты: ПСА, IPSS, урофлоуметрия, медикаментозное лечение, ТУРП и лазерная HoLEP.', title: 'Аденома простаты&nbsp;—<br>диагностика и лечение' },
+  { href: '/kidney-stones',        tag: 'МКБ',             desc: 'Почечная колика, типы камней, ДЛТ, контактная литотрипсия, перкутанная нефролитотрипсия, метафилактика.', title: 'Удаление камней<br>в почках в Ростове' },
+  { href: '/erectile-dysfunction', tag: 'Андрология',      desc: 'Эректильная дисфункция: IIEF-5, гормоны, УЗДГ полового члена, ингибиторы ФДЭ-5, УВТ, протезирование.', title: 'Лечение эректильной<br>дисфункции' },
+  { href: '/cystitis',             tag: 'Урогинекология',  desc: 'Острый и рецидивирующий цистит у женщин: посев мочи, антибиотик-стюардшип, профилактика рецидивов.', title: 'Лечение цистита<br>в Ростове-на-Дону' },
+  { href: '/services',             tag: 'Все услуги',      desc: 'Полный перечень направлений приёма — ИППП, варикоцеле, гидроцеле, бесплодие, стриктура уретры, чек-апы.', title: 'Все направления<br>приёма' },
+];
+
+const reviews = [
+  { stars: 5, text: '«В марте 2026 обратился в ОКБ № 2 для удаления большой (7,8 см) кисты правой почки. Операция, благодаря высокой квалификации Заура Айдиновича, прошла успешно и без осложнений — через 3 дня я был выписан. Рекомендую!»', who: 'Пациент' },
+  { stars: 5, text: '«Обратилась с почечной коликой. Доктор сразу назначил операцию по установке стента, через месяц — вторую, по удалению камней. Всё прошло успешно. Высокий профессионализм, чувство юмора и большое доброе сердце.»', who: 'Пациентка' },
+  { stars: 5, text: '«Обратился с диагнозом „стриктура уретры“. Заур Айдинович провёл уретроскопию, назначил госпитализацию и провёл уретропластику — операция прошла успешно, послеоперационный период без осложнений. Рекомендую.»', who: 'Пациент' },
+];
+---
+<Base title={title} description={description} active="home" jsonLd={[physicianLd, websiteLd]}>
+
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow eyebrow-dot">Принимаю · сегодня свободные слоты</span>
+          <h1>Уролог в&nbsp;Ростове-на-Дону&nbsp;— <em>с&nbsp;человеческим отношением.</em></h1>
+          <p class="hero__lede">
+            {SITE.doctor.fullName} — врач-уролог, {SITE.doctor.titleSuffix}, оперирующий хирург.
+            Очный приём в&nbsp;Ростове-на-Дону ({SITE.clinic.name.split(' · ')[0]}) и&nbsp;онлайн-консультации по&nbsp;всей России.
+            Доказательная медицина, доверительная атмосфера и&nbsp;полная конфиденциальность.
+          </p>
+          <div class="hero__cta">
+            <a href="/online" class="btn btn--lg">Записаться онлайн <span class="arr" aria-hidden="true">→</span></a>
+            <a href="/about" class="btn btn--ghost btn--lg">О враче</a>
+          </div>
+          <div class="hero__meta">
+            <div><div class="num">2016</div><div class="lbl">диплом РостГМУ</div></div>
+            <div><div class="num">2022</div><div class="lbl">к.м.н.</div></div>
+            <div><div class="num">{SITE.doctor.rating}</div><div class="lbl"><a href={SITE.contacts.prodoctorov} target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor;">★ ProDoctorov</a></div></div>
+          </div>
+        </div>
+        <div class="hero__portrait reveal">
+          <picture>
+            <img src="/assets/img/doctor.jpg" alt="Мирзаев Заур Айдинович — врач-уролог в Ростове-на-Дону" width="832" height="1248" fetchpriority="high" decoding="async" />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <div class="container trust-strip__inner">
+      <div class="trust-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2L3 6v6c0 5 3.5 9 9 10 5.5-1 9-5 9-10V6l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
+        Врачебная тайна и анонимность
+      </div>
+      <div class="trust-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Приём в день обращения
+      </div>
+      <div class="trust-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h10M7 13h6"/></svg>
+        Заключение в электронном виде
+      </div>
+      <div class="trust-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"/></svg>
+        Связь после консультации
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow eyebrow-dot">Направления приёма</span>
+          <h2>Помогаю с тем, о чём не всегда легко говорить.</h2>
+        </div>
+        <p>Каждое обращение конфиденциально. Берусь только за то, в чём могу помочь профессионально.</p>
+      </div>
+
+      <div class="grid-3">
+        {services.map(s => (
+          <a href={s.href} class="service-card reveal">
+            <div class="num">{s.num}</div>
+            <p>{s.desc}</p>
+            <h3 set:html={s.title}></h3>
+            <div class="arrow" aria-hidden="true">→</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow eyebrow-dot">Лечение по направлениям</span>
+          <h2>Глубокие материалы по основным урологическим заболеваниям.</h2>
+        </div>
+        <p>Подробно о причинах, диагностике, методах лечения и ценах в Ростове-на-Дону. По европейским и российским клиническим рекомендациям.</p>
+      </div>
+
+      <div class="thematic-cards">
+        {themes.map(t => (
+          <a href={t.href} class="thematic-card reveal">
+            <span class="thematic-card__tag">{t.tag}</span>
+            <p>{t.desc}</p>
+            <h3 set:html={t.title}></h3>
+            <div class="arrow" aria-hidden="true">→</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="process reveal">
+        <span class="eyebrow eyebrow-dot">Как проходит консультация</span>
+        <h2>Без спешки, без оценок,<br>с понятным планом.</h2>
+        <div class="process-steps">
+          <div class="step"><div class="n">01.</div><h4>Запись</h4><p>Выбираете удобное время на сайте или пишете в WhatsApp. Подтверждение в течение часа.</p></div>
+          <div class="step"><div class="n">02.</div><h4>Подготовка</h4><p>Присылаете анализы и краткое описание. Я успеваю ознакомиться до встречи.</p></div>
+          <div class="step"><div class="n">03.</div><h4>Консультация</h4><p>30–45 минут разговора. Без шаблонов, с разбором именно вашей ситуации.</p></div>
+          <div class="step"><div class="n">04.</div><h4>План и связь</h4><p>Получаете письменное заключение и можете писать мне в течение 14 дней.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="spotlight">
+        <div class="spotlight__copy">
+          <span class="eyebrow eyebrow-dot">Онлайн-консультация</span>
+          <h2>Полноценный приём — там, где удобно вам.</h2>
+          <p style="margin-top:18px; color:var(--ink-soft); font-size:17px;">
+            Подходит для разбора анализов, второго мнения, контроля терапии и деликатных вопросов, с которыми не хочется идти лично. Видеозвонок длится 30–45 минут, после — письменное заключение и связь со мной 14 дней.
+          </p>
+          <div style="margin-top:28px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="/online" class="btn">Выбрать время <span class="arr" aria-hidden="true">→</span></a>
+            <a href="/services#online" class="btn btn--ghost">Что входит</a>
+          </div>
+        </div>
+        <div class="price-card">
+          <span class="label">Онлайн-консультация уролога</span>
+          <div class="price">{SITE.pricing.onlineConsult.toLocaleString('ru-RU').replace(',', ' ')}<small>₽</small></div>
+          <ul>
+            <li><span class="check" aria-hidden="true">✓</span> Видеоконсультация 30–45 минут</li>
+            <li><span class="check" aria-hidden="true">✓</span> Изучение анализов до встречи</li>
+            <li><span class="check" aria-hidden="true">✓</span> Письменное заключение и план</li>
+            <li><span class="check" aria-hidden="true">✓</span> Связь со мной 14 дней после</li>
+          </ul>
+          <a href="/online" class="btn btn--block btn--lg">Записаться <span class="arr" aria-hidden="true">→</span></a>
+          <p class="muted" style="font-size:12px; margin-top:14px; text-align:center;">Оплата на сайте — после подтверждения времени</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow eyebrow-dot">Отзывы пациентов</span>
+          <h2>Спасибо тем, кто доверил мне своё здоровье.</h2>
+        </div>
+        <p>{SITE.doctor.ratingCount} верифицированных отзывов · {SITE.doctor.rating}★ · 100% пятёрок. Все отзывы — с площадки <strong>ПроДокторов</strong>.</p>
+      </div>
+
+      <div class="review-row">
+        {reviews.map(r => (
+          <div class="review reveal">
+            <div class="review__stars" aria-label={`${r.stars} из 5 звёзд`}>★ ★ ★ ★ ★</div>
+            <p class="review__text">{r.text}</p>
+            <div class="review__author">
+              <div class="review__name">{r.who}</div>
+              <div class="review__source">ProDoctorov · верифицирован</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style="text-align:center; margin-top:48px;">
+        <a href="/reviews" class="btn btn--ghost">Все отзывы <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="cta-band--home reveal">
+        <div>
+          <span class="eyebrow eyebrow-dot">Если вы дочитали до конца</span>
+          <h2>Запись — это уже половина пути.</h2>
+          <p>Не откладывайте. Большинство урологических состояний проще решаются на ранней стадии — это касается и физического здоровья, и спокойствия в голове.</p>
+        </div>
+        <a href="/online" class="btn btn--lg">Записаться <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  .hero h1 {
+    font-family: var(--font-serif);
+    font-size: clamp(44px, 5.8vw, 88px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-top: 28px;
+    text-wrap: balance;
+  }
+  .hero h1 :global(em) { font-style: italic; color: var(--color-teal); }
+  .hero__lede { margin-top: 28px; font-size: 19px; color: var(--color-ink-soft); max-width: 540px; line-height: 1.55; }
+  @media (max-width: 720px) {
+    .hero__lede { font-size: 16px; margin-top: 20px; }
+    .hero__cta { margin-top: 24px; }
+    .hero__cta :global(.btn) { flex: 1; justify-content: center; }
+    .hero__meta { margin-top: 36px; padding-top: 20px; gap: 12px; }
+    .hero__meta .num { font-size: 30px; }
+    .hero__meta .lbl { font-size: 10px; letter-spacing: 0.1em; }
+  }
+  .hero__cta { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+  .hero__meta {
+    margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    border-top: 1px solid var(--color-line); padding-top: 28px;
+  }
+  .hero__meta .num { font-family: var(--font-serif); font-size: 44px; line-height: 1; color: var(--color-teal); }
+  .hero__meta .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-muted); margin-top: 8px; }
+  .hero__portrait { position: relative; aspect-ratio: 4/5; border-radius: 24px; overflow: hidden; }
+  .hero__portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; border-radius: 24px; }
+  @media (max-width: 720px) { .hero__portrait { aspect-ratio: 4/4.5; border-radius: 18px; } }
+</style>

@@ -1,0 +1,111 @@
+---
+import '~/styles/global.css';
+import { SITE } from '~/lib/site';
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import Floater from '~/components/Floater.astro';
+import CookieBanner from '~/components/CookieBanner.astro';
+import MetrikaScript from '~/components/MetrikaScript.astro';
+import JsonLd from '~/components/JsonLd.astro';
+import RevealOnScroll from '~/components/RevealOnScroll.astro';
+
+interface Props {
+  /** Page <title>. */
+  title: string;
+  /** Meta description. */
+  description: string;
+  /** Active navigation key (matches NAV[].key in site.ts). */
+  active?: string;
+  /** Path within the site (e.g. "/about"). Used to derive canonical/og:url. */
+  path?: string;
+  /** Override OG image (defaults to /assets/img/og.svg). */
+  ogImage?: string;
+  /** Robots directive. Defaults to "index, follow, ...". */
+  robots?: string;
+  /** Optional JSON-LD payloads to emit in <head>. */
+  jsonLd?: unknown[];
+  /** Hide the floating WhatsApp button (e.g. on contacts page where it duplicates the channel list). */
+  hideFloater?: boolean;
+}
+
+const {
+  title,
+  description,
+  active,
+  path = Astro.url.pathname,
+  ogImage = '/assets/img/og.svg',
+  robots = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
+  jsonLd = [],
+  hideFloater = false,
+} = Astro.props;
+
+const canonical = new URL(path, SITE.url).toString().replace(/\/$/, path === '/' ? '/' : '');
+const ogImageAbs = new URL(ogImage, SITE.url).toString();
+---
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta name="robots" content={robots} />
+
+  <meta name="theme-color" content="#1f4a47" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="author" content={SITE.doctor.fullName} />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- Geo (Ростов-на-Дону) -->
+  <meta name="geo.region" content="RU-ROS" />
+  <meta name="geo.placename" content={SITE.clinic.locality} />
+  <meta name="geo.position" content={`${SITE.clinic.geo.lat};${SITE.clinic.geo.lng}`} />
+  <meta name="ICBM" content={`${SITE.clinic.geo.lat}, ${SITE.clinic.geo.lng}`} />
+
+  <!-- Icons & manifest -->
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg" />
+  <link rel="alternate icon" href="/assets/img/favicon.ico" />
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImageAbs} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageAbs} />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <!-- Yandex.Metrika (early) -->
+  <MetrikaScript />
+
+  <!-- JSON-LD -->
+  {jsonLd.map(d => <JsonLd data={d} />)}
+
+  <slot name="head" />
+</head>
+<body>
+  <Header active={active} />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+  {!hideFloater && <Floater />}
+  <CookieBanner />
+  <RevealOnScroll />
+</body>
+</html>
