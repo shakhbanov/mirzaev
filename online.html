@@ -87,7 +87,7 @@
 </script>
 <style>
 .online-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; }
-@media (max-width: 980px) { .online-grid { grid-template-columns: 1fr; } }
+@media (max-width: 1180px) { .online-grid { grid-template-columns: 1fr; gap: 48px; } }
 
 .booking {
   background: var(--bg-elevated);
@@ -97,7 +97,7 @@
   position: sticky;
   top: 96px;
 }
-@media (max-width: 980px) { .booking { position: static; padding: 28px; } }
+@media (max-width: 1180px) { .booking { position: static; padding: 28px; } }
 .booking h3 { font-family: var(--font-serif); font-size: 28px; line-height: 1.1; }
 .booking__price { display: flex; align-items: baseline; gap: 10px; margin-top: 14px; padding-bottom: 24px; border-bottom: 1px solid var(--line-soft); }
 .booking__price .v { font-family: var(--font-serif); font-size: 56px; line-height: 1; }
@@ -107,23 +107,35 @@
 .step-h .n { width: 24px; height: 24px; border-radius: 50%; background: var(--teal); color: var(--bg); display: grid; place-items: center; font-size: 12px; font-family: var(--font-mono); }
 .step-h h4 { font-size: 14px; font-family: var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); font-weight: 500; }
 
-.dates { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; }
+/* 14 days laid out as a 2-week grid (7 cols x 2 rows). Wraps cleanly on
+   any width, no horizontal scroll, no cropped tiles. */
+.dates {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
 .date {
-  flex: none;
-  min-width: 64px;
   text-align: center;
   border: 1px solid var(--line);
   background: var(--bg-elevated);
   border-radius: 12px;
-  padding: 10px 0;
+  padding: 10px 4px;
   cursor: pointer;
   transition: all .15s ease;
+  min-width: 0;
 }
-.date small { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: block; }
+.date small { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); display: block; }
 .date strong { font-family: var(--font-serif); font-size: 22px; display: block; line-height: 1.1; margin-top: 4px; }
-.date span { font-size: 11px; color: var(--muted); }
+.date span { font-size: 10px; color: var(--muted); display: block; margin-top: 2px; }
 .date.is-selected { background: var(--teal); border-color: var(--teal); color: var(--bg); }
 .date.is-selected small, .date.is-selected span { color: rgba(255,255,255,0.75); }
+@media (max-width: 540px) {
+  .dates { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+  .date { padding: 8px 2px; border-radius: 10px; }
+  .date strong { font-size: 18px; }
+  .date small { font-size: 9px; letter-spacing: 0.04em; }
+  .date span { font-size: 9px; }
+}
 
 .summary {
   margin-top: 28px;
@@ -162,12 +174,20 @@
   margin-top: 32px;
 }
 @media (max-width: 720px) { .benefits { grid-template-columns: 1fr; } }
-.benefit { padding: 28px 0; border-bottom: 1px solid var(--line); padding-right: 32px; }
+.benefit { padding: 28px 0; border-bottom: 1px solid var(--line); padding-right: 32px; min-width: 0; }
 .benefit:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 32px; padding-left: 0; }
 .benefit:nth-child(even) { padding-left: 32px; padding-right: 0; }
-@media (max-width: 720px) { .benefit { padding: 24px 0 !important; border-right: 0 !important; } }
+@media (max-width: 720px) { .benefit { padding: 24px 0 !important; border-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; } }
 .benefit .ico { color: var(--teal); margin-bottom: 14px; }
-.benefit h4 { font-family: var(--font-serif); font-size: 22px; line-height: 1.15; }
+.benefit h4 {
+  font-family: var(--font-serif);
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.15;
+  /* preserve whole-word breaks; let descender text wrap, not headlines */
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
+}
 .benefit p { color: var(--ink-soft); font-size: 14px; margin-top: 10px; line-height: 1.55; }
 
 .timeline { margin-top: 32px; }
