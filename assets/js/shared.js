@@ -205,7 +205,7 @@
     const html =
       '<div class="mobile-cta" id="mobileCta" role="region" aria-label="Запись на приём">' +
         '<div class="mobile-cta__inner">' +
-          '<div class="mobile-cta__txt"><strong>Онлайн-консультация · 3 500 ₽</strong>Видео 30–45 мин · заключение · 14 дней связи</div>' +
+          '<div class="mobile-cta__txt"><strong>Онлайн-консультация</strong>Видео 30–45 мин · заключение · 14 дней связи</div>' +
           '<a href="online.html" class="btn">Записаться <span class="arr" aria-hidden="true">→</span></a>' +
         '</div>' +
       '</div>';
