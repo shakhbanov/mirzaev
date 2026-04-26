@@ -324,6 +324,16 @@ section { padding: var(--s-9) 0; }
   .footer-bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
 }
 
+.footer-disclaimer {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 11px;
+  line-height: 1.55;
+  color: #6b8480;
+  max-width: 980px;
+}
+
 /* ---------- Card ---------- */
 .card {
   background: var(--bg-elevated);

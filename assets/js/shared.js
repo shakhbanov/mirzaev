@@ -88,7 +88,7 @@
             <ul>
               <li><a href="tel:+79289666610">+7 928 966-66-10</a></li>
               <li><a href="https://wa.me/79289666610" target="_blank" rel="noopener">WhatsApp</a></li>
-              <li><a href="https://instagram.com/uromirzaev" target="_blank" rel="noopener">Instagram</a></li>
+              <li><a href="https://instagram.com/uromirzaev" target="_blank" rel="noopener">Instagram*</a></li>
               <li><a href="contacts.html">Все контакты</a></li>
             </ul>
           </div>
@@ -97,6 +97,9 @@
           <span>© 2026 doctor-mirzaev.ru · Все права защищены</span>
           <span>18+</span>
         </div>
+        <p class="footer-disclaimer">
+          * Meta Platforms Inc. (владелец Facebook и&nbsp;Instagram) признана экстремистской организацией; её деятельность запрещена на&nbsp;территории Российской Федерации. WhatsApp принадлежит Meta, но&nbsp;под судебное решение не&nbsp;подпадает и&nbsp;доступен в&nbsp;РФ.
+        </p>
       </div>
     </footer>`;
   }
