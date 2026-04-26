@@ -315,6 +315,7 @@
 
         <div class="step-h"><span class="n">3</span><h4>Контакты</h4></div>
         <form class="fields" id="bookform">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true">
           <div class="field"><label>Имя</label><input type="text" name="name" placeholder="Как к вам обращаться" autocomplete="name" required></div>
           <div class="field-row">
             <div class="field"><label>Телефон</label><input type="tel" name="phone" inputmode="tel" autocomplete="tel" data-phone placeholder="+7 928 000-00-00" maxlength="18" required></div>
@@ -417,11 +418,24 @@
     else sumtxt.textContent = '—';
   }
 
-  // ---- Submit → open doctor's WhatsApp with prefilled message ----
-  // Static-site approach: build a wa.me URL, target the doctor's number,
-  // fill the message body with form data. The patient sees the chat with
-  // the message already typed and just hits Send.
+  // ---- Submit pipeline ---------------------------------------------------
+  // 1. Fire-and-forget POST to FormSubmit so the booking lands in
+  //    hello@doctor-mirzaev.ru as a permanent record.
+  // 2. Open the doctor's WhatsApp with a prefilled message so the patient
+  //    can reach the doctor immediately. Patient experience is unchanged.
   const DOCTOR_WA = '79289666610';
+  const EMAIL_ENDPOINT = 'https://formsubmit.co/ajax/hello@doctor-mirzaev.ru';
+
+  function sendBookingEmail(payload) {
+    // Don't await — the patient should not wait for the email round-trip.
+    // FormSubmit returns 200 within ~500 ms but we don't care about it for UX.
+    return fetch(EMAIL_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => { /* offline / blocked — silently ignore */ });
+  }
+
   document.getElementById('bookform').addEventListener('submit', (e) => {
     e.preventDefault();
     if (!selectedDate || !selectedSlot) {
@@ -430,11 +444,31 @@
     }
     const form = e.target;
     const get = (n) => (form.elements[n] ? form.elements[n].value.trim() : '');
+    // Bot honeypot — if filled, drop the request.
+    if (get('_honey')) return;
+
     const name = get('name');
     const phone = get('phone');
     const wa = get('whatsapp');
     const note = get('note');
 
+    // 1) Email copy ------------------------------------------------------
+    sendBookingEmail({
+      _subject: `Заявка · ${selectedDate} ${selectedSlot} · ${name}`,
+      _template: 'box',
+      _captcha: 'false',
+      _replyto: 'hello@doctor-mirzaev.ru',
+      'Дата приёма': selectedDate,
+      'Время': selectedSlot,
+      'Имя': name,
+      'Телефон': phone,
+      'WhatsApp': wa && wa !== phone ? wa : phone,
+      'Сообщение': note || '—',
+      'Источник': location.href,
+      'User-Agent': navigator.userAgent
+    });
+
+    // 2) WhatsApp deeplink with prefilled message ----------------------
     const lines = [
       'Здравствуйте, Заур Айдинович!',
       'Хочу записаться на онлайн-консультацию.',
@@ -445,13 +479,9 @@
     ];
     if (wa && wa !== phone) lines.push(`WhatsApp: ${wa}`);
     if (note) lines.push('', note);
-
     const text = lines.join('\n');
     const url = 'https://wa.me/' + DOCTOR_WA + '?text=' + encodeURIComponent(text);
 
-    // Try to open in a new tab. Pop-up blockers may swallow this when the
-    // submit isn't seen as direct user interaction; we fall back to the
-    // confirm-banner link that the patient can tap manually.
     const w = window.open(url, '_blank', 'noopener');
     if (!w) location.href = url;
 
