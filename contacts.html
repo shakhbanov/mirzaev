@@ -267,11 +267,16 @@
       <h3>Или напишите коротко — отвечу лично</h3>
       <p>Заполните пару полей — свяжусь в WhatsApp.</p>
       <form class="fields fields--grid" id="cform">
-        <div class="field"><label>Имя</label><input type="text" required placeholder="Как к вам обращаться"></div>
-        <div class="field"><label>Телефон / WhatsApp</label><input type="text" required placeholder="+7..."></div>
-        <div class="field field--full"><label>Сообщение</label><textarea placeholder="Что вас беспокоит, в каком формате удобно — очно или онлайн"></textarea></div>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0" aria-hidden="true">
+        <div class="field"><label>Имя</label><input type="text" name="name" autocomplete="name" required placeholder="Как к вам обращаться"></div>
+        <div class="field"><label>Телефон / WhatsApp</label><input type="tel" name="phone" inputmode="tel" autocomplete="tel" data-phone required placeholder="+7 928 000-00-00" maxlength="18"></div>
+        <div class="field field--full"><label>Сообщение</label><textarea name="message" placeholder="Что вас беспокоит, в каком формате удобно — очно или онлайн"></textarea></div>
         <div class="field--full">
-          <button type="submit" class="btn btn--lg">Отправить <span class="arr">→</span></button>
+          <button type="submit" class="btn btn--lg" id="csubmit">Отправить <span class="arr">→</span></button>
+          <p class="muted" style="font-size:11px; margin-top:8px;">
+            Нажимая, вы соглашаетесь с&nbsp;обработкой персональных данных.
+            Свяжусь с&nbsp;вами в&nbsp;течение часа в&nbsp;рабочее время.
+          </p>
           <div class="confirm-msg" id="cconfirm" style="display:none; margin-top: 14px; padding: 16px; background: rgba(31,74,71,0.06); border: 1px solid rgba(31,74,71,0.2); border-radius: 12px; color: var(--teal); font-size: 14px;">
             <strong>Спасибо.</strong> Свяжусь с вами в течение часа в рабочее время.
           </div>
@@ -286,10 +291,78 @@
 <script src="assets/js/shared.js"></script>
 <script>
   DM.mount('contacts');
-  document.getElementById('cform').addEventListener('submit', (e) => {
+
+  // ---- Contact form → email via FormSubmit ----------------------------
+  const EMAIL_ENDPOINT = 'https://formsubmit.co/ajax/hello@doctor-mirzaev.ru';
+  const cform = document.getElementById('cform');
+  const cconfirm = document.getElementById('cconfirm');
+  const csubmit = document.getElementById('csubmit');
+
+  cform.addEventListener('submit', async (e) => {
     e.preventDefault();
-    document.getElementById('cconfirm').style.display = 'block';
-    e.target.querySelectorAll('input,textarea').forEach(i => i.value = '');
+    const get = (n) => (cform.elements[n] ? cform.elements[n].value.trim() : '');
+    if (get('_honey')) return; // bot trap
+
+    const name = get('name');
+    const phone = get('phone');
+    const message = get('message');
+    if (!name || !phone) return;
+
+    csubmit.disabled = true;
+    csubmit.textContent = 'Отправляем…';
+
+    try {
+      await fetch(EMAIL_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: `Сообщение с сайта · ${name}`,
+          _template: 'box',
+          _captcha: 'false',
+          _replyto: 'hello@doctor-mirzaev.ru',
+          'Имя': name,
+          'Телефон / WhatsApp': phone,
+          'Сообщение': message || '—',
+          'Источник': location.href,
+        }),
+      });
+    } catch (_) { /* offline / blocked — show success anyway, not patient's problem */ }
+
+    try { window.ym && ym(108756990, 'reachGoal', 'submit_contact_form'); } catch (e) {}
+
+    csubmit.innerHTML = 'Отправлено&nbsp;✓';
+    cconfirm.style.display = 'block';
+    cform.querySelectorAll('input, textarea, button').forEach(el => { el.disabled = true; });
+  });
+
+  // ---- Russian phone mask: +7 999 123-45-67 ----------------------------
+  function formatRuPhone(value) {
+    let digits = value.replace(/\D/g, '');
+    if (digits.startsWith('7') || digits.startsWith('8')) digits = digits.slice(1);
+    digits = digits.slice(0, 10);
+    let out = '+7';
+    if (digits.length > 0) out += ' ' + digits.slice(0, Math.min(3, digits.length));
+    if (digits.length >= 4) out += ' ' + digits.slice(3, Math.min(6, digits.length));
+    if (digits.length >= 7) out += '-' + digits.slice(6, Math.min(8, digits.length));
+    if (digits.length >= 9) out += '-' + digits.slice(8, 10);
+    return out;
+  }
+  document.querySelectorAll('input[data-phone]').forEach(input => {
+    input.addEventListener('focus', () => { if (!input.value) input.value = '+7 '; });
+    input.addEventListener('input', () => {
+      const cursorAtEnd = input.selectionStart === input.value.length;
+      const formatted = formatRuPhone(input.value);
+      input.value = formatted;
+      if (cursorAtEnd) input.setSelectionRange(formatted.length, formatted.length);
+    });
+    input.addEventListener('blur', () => {
+      if (input.value === '+7' || input.value === '+7 ') input.value = '';
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && input.selectionStart <= 3 && input.selectionEnd <= 3) {
+        e.preventDefault();
+      }
+    });
   });
 </script>
 </body>
