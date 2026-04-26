@@ -79,7 +79,8 @@
               <li><a href="faq.html">FAQ</a></li>
               <li><a href="faq.html#prep">Подготовка к приёму</a></li>
               <li><a href="faq.html#ipss">Самоопросник IPSS</a></li>
-              <li><a href="faq.html#privacy">Конфиденциальность</a></li>
+              <li><a href="faq.html#privacy">Конфиденциальность приёма</a></li>
+              <li><a href="privacy.html">Обработка персональных данных</a></li>
             </ul>
           </div>
           <div class="footer-col">
