@@ -81,6 +81,7 @@
               <li><a href="faq.html#ipss">Самоопросник IPSS</a></li>
               <li><a href="faq.html#privacy">Конфиденциальность приёма</a></li>
               <li><a href="privacy.html">Обработка персональных данных</a></li>
+              <li><a href="cookies.html">Cookies</a></li>
             </ul>
           </div>
           <div class="footer-col">
@@ -108,7 +109,7 @@
     return `
     <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Уведомление о cookie">
       <div class="cookie-banner__inner">
-        <p class="cookie-banner__text">Мы используем на сайте куки. В интернете без них никак.</p>
+        <p class="cookie-banner__text">Мы используем на сайте <a href="cookies.html" class="cookie-banner__link">куки</a>. В интернете без них никак.</p>
         <button class="btn cookie-banner__btn" id="cookieAccept">Согласен</button>
       </div>
     </div>`;

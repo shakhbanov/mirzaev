@@ -579,6 +579,13 @@ section { padding: var(--s-9) 0; }
   flex: 1;
   color: rgba(247,245,241,0.86);
 }
+.cookie-banner__link {
+  color: var(--sand);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(217,201,168,0.5);
+  transition: border-color .15s ease;
+}
+.cookie-banner__link:hover { border-bottom-color: var(--sand); }
 .cookie-banner__btn {
   flex-shrink: 0;
   background: var(--sand);
