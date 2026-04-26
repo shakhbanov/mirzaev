@@ -94,7 +94,7 @@
         </div>
         <div class="footer-bottom">
           <span>© 2026 doctor-mirzaev.ru · Все права защищены</span>
-          <span>Лиц. № ЛО-00-00-000000 · 18+</span>
+          <span>18+</span>
         </div>
       </div>
     </footer>`;
