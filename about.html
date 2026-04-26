@@ -68,7 +68,7 @@
       "jobTitle": "Врач-уролог, оперирующий хирург",
       "description": "Врач-уролог в Ростове-на-Дону, кандидат медицинских наук, оперирующий хирург. Более 1000 проведённых операций, специализация — хирургия стриктур уретры.",
       "url": "https://doctor-mirzaev.ru/about.html",
-      "image": "https://doctor-mirzaev.ru/assets/img/doctor.jpg",
+      "image": ["https://doctor-mirzaev.ru/assets/img/doctor.jpg", "https://doctor-mirzaev.ru/assets/img/surgery.png"],
       "medicalSpecialty": "Urology",
       "knowsAbout": ["Урология","Реконструктивная урология","Хирургия стриктур уретры","Уретропластика","Модификация техники Asopa","Малоинвазивная урологическая хирургия","Лапароскопия","Эндоурология","Мочекаменная болезнь","Гиперплазия предстательной железы (ДГПЖ)","Варикоцеле","Гидроцеле"],
       "memberOf": {"@type": "EducationalOrganization", "name": "Кафедра урологии и репродуктивного здоровья человека (с курсом детской урологии-андрологии), РостГМУ"},
@@ -243,6 +243,30 @@
   letter-spacing: 0.18em;
   color: var(--teal-deep);
   opacity: 0.55;
+}
+.surg-hero { display: grid; grid-template-columns: minmax(260px, 360px) 1fr; gap: clamp(24px, 4vw, 48px); align-items: center; margin-bottom: 8px; }
+@media (max-width: 800px) { .surg-hero { grid-template-columns: 1fr; gap: 24px; } }
+.surg-hero__photo {
+  aspect-ratio: 3/4;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: var(--teal-deep);
+  box-shadow: 0 20px 50px -25px rgba(31,74,71,0.55);
+}
+.surg-hero__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.surg-hero__photo::after {
+  content: "В операционной · ГКБ № 20";
+  position: absolute; left: 14px; bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #f0ece2;
+  background: rgba(15,30,29,0.55);
+  padding: 6px 10px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
 }
 .surg-band .principles { background: transparent; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(31,74,71,0.25); border-left: 1px solid rgba(31,74,71,0.25); margin-top: 32px; }
 @media (max-width: 1100px) { .surg-band .principles { grid-template-columns: repeat(2, 1fr); } }
@@ -422,12 +446,15 @@
 <section>
   <div class="container">
     <div class="surg-band reveal">
-      <div class="section-head" style="margin-bottom: 8px;">
+      <div class="surg-hero">
+        <a class="surg-hero__photo" href="assets/img/surgery.png" data-lightbox aria-label="Открыть фото в полном размере">
+          <img src="assets/img/surgery.png" alt="Мирзаев З.А. в операционной — оперирующий уролог за работой" loading="lazy">
+        </a>
         <div>
           <span class="eyebrow eyebrow-dot" style="color: var(--teal-deep);">Оперативная урология · акцент практики</span>
-          <h2 style="font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); margin-top: 14px; color: var(--teal-deep);">Я оперирую — современная хирургия с малоинвазивным подходом</h2>
+          <h2 style="font-family: var(--font-serif); font-size: clamp(32px, 4.2vw, 52px); margin-top: 14px; color: var(--teal-deep); line-height: 1.05;">Я оперирую — современная хирургия с малоинвазивным подходом</h2>
+          <p style="color: var(--ink); margin-top: 18px;">В клинической практике использую современные хирургические технологии: малоинвазивные и эндоскопические вмешательства. Это позволяет минимизировать травматичность, сократить срок восстановления и достичь высоких функциональных результатов. За плечами — 1000+ проведённых операций в стационаре.</p>
         </div>
-        <p style="color: var(--ink);">В клинической практике использую современные хирургические технологии: малоинвазивные и эндоскопические вмешательства. Это позволяет минимизировать травматичность, сократить срок восстановления и достичь высоких функциональных результатов. За плечами — 1000+ проведённых операций в стационаре.</p>
       </div>
       <div class="principles">
         <div class="principle">
