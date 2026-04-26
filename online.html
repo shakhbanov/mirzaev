@@ -342,6 +342,11 @@
 <script>
   DM.mount('online');
 
+  // ---- Cal.com proxy ----------------------------------------------------
+  // Cloudflare Worker that hides the Cal.com API key. Update this URL
+  // after deploying the worker (see /root/doctor-mirzaev-cal-proxy/README.md).
+  const CAL_PROXY = 'https://doctor-mirzaev-cal.shakhbanov.workers.dev';
+
   // Build dates (next 14 days)
   const datesEl = document.getElementById('dates');
   const slotsEl = document.getElementById('slots');
@@ -349,53 +354,69 @@
   const months = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
   const days = ['вс','пн','вт','ср','чт','пт','сб'];
   const today = new Date();
-  let selectedDate = null;
+  let selectedDate = null;     // human label like "27 апр"
+  let selectedDateISO = null;  // YYYY-MM-DD for the API
   let selectedSlot = null;
 
   for (let i = 1; i <= 14; i++) {
     const d = new Date(today); d.setDate(today.getDate() + i);
-    const dow = d.getDay(); // 0=Sun .. 5=Fri .. 6=Sat
     const el = document.createElement('div');
     el.className = 'date';
     el.innerHTML = `<small>${days[d.getDay()]}</small><strong>${d.getDate()}</strong><span>${months[d.getMonth()]}</span>`;
-    el.dataset.iso = d.toISOString().slice(0,10);
+    // Local YYYY-MM-DD (avoid UTC shift from toISOString)
+    const iso = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    el.dataset.iso = iso;
     el.dataset.label = `${d.getDate()} ${months[d.getMonth()]}`;
     el.addEventListener('click', () => {
       document.querySelectorAll('.date').forEach(x => x.classList.remove('is-selected'));
       el.classList.add('is-selected');
       selectedDate = el.dataset.label;
+      selectedDateISO = el.dataset.iso;
       selectedSlot = null;
-      renderSlots(dow);
+      renderSlots(el.dataset.iso);
       updateSum();
     });
     datesEl.appendChild(el);
     if (i === 1) el.click();
   }
 
-  // Friday 14:00–20:00 — in-person clinic hours, online slots are blocked.
-  // Every other day every slot is open.
-  const FRIDAY = 5;
-  const inPersonSlots = new Set(['14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15']);
+  // ---- Live availability from Cal.com via the proxy --------------------
+  // Cal.com is the source of truth: working hours, Friday-off, already-
+  // booked slots, calendar busy times — all enforced server-side. The
+  // browser just renders what comes back.
+  async function renderSlots(isoDate) {
+    slotsEl.innerHTML = '<div class="slot is-disabled" style="grid-column: 1 / -1; cursor: default;">Загружаем свободное время…</div>';
+    let times = [];
+    try {
+      const r = await fetch(`${CAL_PROXY}/availability?date=${isoDate}`, { cache: 'no-store' });
+      const j = await r.json();
+      times = Array.isArray(j.slots) ? j.slots : [];
+    } catch (e) {
+      slotsEl.innerHTML = '<div class="slot is-disabled" style="grid-column: 1 / -1; cursor: default;">Не удалось загрузить расписание. Напишите в&nbsp;WhatsApp.</div>';
+      return;
+    }
 
-  function renderSlots(dow) {
-    const all = ['10:00','10:45','11:30','12:15','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15'];
     slotsEl.innerHTML = '';
-    all.forEach((t) => {
+    if (times.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'slot is-disabled';
+      empty.style.gridColumn = '1 / -1';
+      empty.style.cursor = 'default';
+      empty.textContent = 'В этот день свободных слотов нет';
+      slotsEl.appendChild(empty);
+      return;
+    }
+
+    times.forEach((t) => {
       const s = document.createElement('div');
       s.className = 'slot';
       s.textContent = t;
-      const off = dow === FRIDAY && inPersonSlots.has(t);
-      if (off) {
-        s.classList.add('is-disabled');
-        s.title = 'Очный приём в ГКБ № 20';
-      } else {
-        s.addEventListener('click', () => {
-          document.querySelectorAll('.slot').forEach(x => x.classList.remove('is-selected'));
-          s.classList.add('is-selected');
-          selectedSlot = t;
-          updateSum();
-        });
-      }
+      s.addEventListener('click', () => {
+        document.querySelectorAll('.slot').forEach(x => x.classList.remove('is-selected'));
+        s.classList.add('is-selected');
+        selectedSlot = t;
+        updateSum();
+      });
       slotsEl.appendChild(s);
     });
   }
@@ -406,11 +427,13 @@
     else sumtxt.textContent = '—';
   }
 
-  // ---- Submit → email via FormSubmit ----------------------------------
-  // Static-site flow: fire-and-forget POST to FormSubmit, which forwards
-  // the booking as a structured email to hello@doctor-mirzaev.ru. The
-  // patient just sees the 'Заявка принята' confirmation; the doctor
-  // contacts them back manually within an hour.
+  // ---- Submit pipeline -------------------------------------------------
+  // 1. Cal.com via the Worker proxy — creates the real booking, locks the
+  //    slot for everyone else, generates the video meeting link, sends
+  //    Cal.com's own confirmation email and adds the event to the doctor's
+  //    Google Calendar. This is the source of truth.
+  // 2. FormSubmit copy — fire-and-forget mirror to hello@doctor-mirzaev.ru
+  //    so the doctor has a structured email even if Cal.com webhooks lag.
   const EMAIL_ENDPOINT = 'https://formsubmit.co/ajax/hello@doctor-mirzaev.ru';
 
   function sendBookingEmail(payload) {
@@ -421,9 +444,19 @@
     }).catch(() => { /* offline / blocked — silently ignore */ });
   }
 
-  document.getElementById('bookform').addEventListener('submit', (e) => {
+  async function sendCalBooking(payload) {
+    const r = await fetch(`${CAL_PROXY}/booking`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    return r.json().catch(() => ({ ok: false }));
+  }
+
+  const submitBtn = document.querySelector('#bookform button[type="submit"]');
+  document.getElementById('bookform').addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!selectedDate || !selectedSlot) {
+    if (!selectedDateISO || !selectedSlot) {
       sumtxt.textContent = 'Выберите дату и время';
       return;
     }
@@ -437,22 +470,43 @@
     const wa = get('whatsapp');
     const note = get('note');
 
+    // Lock the form during the round-trip
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправляем…';
+
+    const calResult = await sendCalBooking({
+      date: selectedDateISO,
+      time: selectedSlot,
+      name, phone,
+      whatsapp: wa,
+      note,
+    });
+
+    if (!calResult.ok) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Подтвердить запись <span class="arr">→</span>';
+      sumtxt.textContent = 'Слот уже занят — выберите другой';
+      // Refresh the slot grid so the patient sees the conflict immediately
+      if (selectedDateISO) renderSlots(selectedDateISO);
+      return;
+    }
+
+    // Email mirror — non-blocking
     sendBookingEmail({
       _subject: `Заявка · ${selectedDate} ${selectedSlot} · ${name}`,
       _template: 'box',
       _captcha: 'false',
       _replyto: 'hello@doctor-mirzaev.ru',
-      'Дата приёма': selectedDate,
+      'Дата приёма': `${selectedDate} (${selectedDateISO})`,
       'Время': selectedSlot,
       'Имя': name,
       'Телефон': phone,
       'WhatsApp': wa && wa !== phone ? wa : phone,
       'Сообщение': note || '—',
+      'Cal.com booking': calResult?.body?.data?.uid || calResult?.body?.uid || '—',
       'Источник': location.href,
-      'User-Agent': navigator.userAgent
     });
 
-    // Track conversion
     try { window.ym && ym(108756990, 'reachGoal', 'submit_online_booking'); } catch (e) {}
 
     const confirmEl = document.getElementById('confirm');
