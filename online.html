@@ -130,13 +130,6 @@
   .date span { font-size: 9px; }
 }
 
-.btn--wa {
-  background: #25d366;
-  color: #fff;
-  gap: 10px;
-}
-.btn--wa:hover { background: #1ea854; }
-
 .slots-note {
   margin-top: 14px;
   padding: 12px 14px;
@@ -327,20 +320,15 @@
             <span>Выбрано: <strong id="sumtxt">—</strong></span>
           </div>
 
-          <button type="submit" class="btn btn--lg btn--block btn--wa">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="flex:none">
-              <path d="M19.05 4.91A9.82 9.82 0 0012.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.86 9.86 0 004.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01zm-7.01 15.24h-.01a8.2 8.2 0 01-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.18 8.18 0 01-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 012.41 5.82c-.01 4.54-3.7 8.23-8.25 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.78.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.48-.01-.16 0-.43.06-.66.31-.23.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.54.12.16 1.74 2.66 4.21 3.73.59.25 1.05.4 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.23-.18-.48-.3z"/>
-            </svg>
-            Отправить в&nbsp;WhatsApp
-          </button>
+          <button type="submit" class="btn btn--lg btn--block">Подтвердить запись <span class="arr">→</span></button>
           <p class="muted" style="font-size:11px; text-align:center; margin-top:6px;">
-            Откроется WhatsApp с&nbsp;готовым сообщением — нужно нажать «Отправить» в&nbsp;чате.
             Нажимая, вы соглашаетесь с&nbsp;обработкой персональных данных.
+            Свяжусь с&nbsp;вами в&nbsp;течение часа в&nbsp;рабочее время.
           </p>
 
           <div class="confirm-msg" id="confirm">
-            <strong>Сообщение сформировано.</strong><br>
-            Если WhatsApp не открылся автоматически — <a id="waFallback" href="#" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">нажмите сюда</a>, чтобы открыть чат.
+            <strong>Заявка принята.</strong><br>
+            Свяжусь с&nbsp;вами в&nbsp;течение часа для подтверждения слота.
           </div>
         </form>
       </aside>
@@ -418,17 +406,14 @@
     else sumtxt.textContent = '—';
   }
 
-  // ---- Submit pipeline ---------------------------------------------------
-  // 1. Fire-and-forget POST to FormSubmit so the booking lands in
-  //    hello@doctor-mirzaev.ru as a permanent record.
-  // 2. Open the doctor's WhatsApp with a prefilled message so the patient
-  //    can reach the doctor immediately. Patient experience is unchanged.
-  const DOCTOR_WA = '79289666610';
+  // ---- Submit → email via FormSubmit ----------------------------------
+  // Static-site flow: fire-and-forget POST to FormSubmit, which forwards
+  // the booking as a structured email to hello@doctor-mirzaev.ru. The
+  // patient just sees the 'Заявка принята' confirmation; the doctor
+  // contacts them back manually within an hour.
   const EMAIL_ENDPOINT = 'https://formsubmit.co/ajax/hello@doctor-mirzaev.ru';
 
   function sendBookingEmail(payload) {
-    // Don't await — the patient should not wait for the email round-trip.
-    // FormSubmit returns 200 within ~500 ms but we don't care about it for UX.
     return fetch(EMAIL_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -444,7 +429,7 @@
     }
     const form = e.target;
     const get = (n) => (form.elements[n] ? form.elements[n].value.trim() : '');
-    // Bot honeypot — if filled, drop the request.
+    // Bot honeypot — if filled, drop silently.
     if (get('_honey')) return;
 
     const name = get('name');
@@ -452,7 +437,6 @@
     const wa = get('whatsapp');
     const note = get('note');
 
-    // 1) Email copy ------------------------------------------------------
     sendBookingEmail({
       _subject: `Заявка · ${selectedDate} ${selectedSlot} · ${name}`,
       _template: 'box',
@@ -468,30 +452,12 @@
       'User-Agent': navigator.userAgent
     });
 
-    // 2) WhatsApp deeplink with prefilled message ----------------------
-    const lines = [
-      'Здравствуйте, Заур Айдинович!',
-      'Хочу записаться на онлайн-консультацию.',
-      '',
-      `📅 ${selectedDate} · ${selectedSlot}`,
-      `👤 ${name}`,
-      `📱 ${phone}`,
-    ];
-    if (wa && wa !== phone) lines.push(`WhatsApp: ${wa}`);
-    if (note) lines.push('', note);
-    const text = lines.join('\n');
-    const url = 'https://wa.me/' + DOCTOR_WA + '?text=' + encodeURIComponent(text);
-
-    const w = window.open(url, '_blank', 'noopener');
-    if (!w) location.href = url;
-
     // Track conversion
     try { window.ym && ym(108756990, 'reachGoal', 'submit_online_booking'); } catch (e) {}
 
-    const fallback = document.getElementById('waFallback');
-    if (fallback) fallback.href = url;
     const confirmEl = document.getElementById('confirm');
     confirmEl.classList.add('is-on');
+    form.querySelectorAll('input, textarea, button').forEach(el => { el.disabled = true; });
     setTimeout(() => { confirmEl.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 100);
   });
 
