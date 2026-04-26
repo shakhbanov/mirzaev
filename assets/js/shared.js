@@ -81,7 +81,6 @@
               <li><a href="faq.html#ipss">Самоопросник IPSS</a></li>
               <li><a href="faq.html#privacy">Конфиденциальность приёма</a></li>
               <li><a href="privacy.html">Обработка персональных данных</a></li>
-              <li><a href="cookies.html">Cookies</a></li>
             </ul>
           </div>
           <div class="footer-col">
