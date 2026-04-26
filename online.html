@@ -130,6 +130,26 @@
   .date span { font-size: 9px; }
 }
 
+.slots-note {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--sand-soft);
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #6b5b3a;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.slots-note::before {
+  content: "ⓘ";
+  flex: none;
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--teal);
+}
+
 .summary {
   margin-top: 28px;
   padding: 18px;
@@ -281,13 +301,17 @@
 
         <div class="step-h"><span class="n">2</span><h4>Свободное время</h4></div>
         <div class="slots" id="slots"></div>
+        <p class="slots-note">
+          В пятницу 14:00–20:00 — очный приём в ГКБ № 20, онлайн-слоты в эти часы недоступны.
+          В редких случаях возможен перенос времени из-за внеплановой операции — предупрежу заранее в WhatsApp.
+        </p>
 
         <div class="step-h"><span class="n">3</span><h4>Контакты</h4></div>
         <form class="fields" id="bookform">
-          <div class="field"><label>Имя</label><input type="text" placeholder="Как к вам обращаться" required></div>
+          <div class="field"><label>Имя</label><input type="text" placeholder="Как к вам обращаться" autocomplete="name" required></div>
           <div class="field-row">
-            <div class="field"><label>Телефон</label><input type="tel" placeholder="+7" required></div>
-            <div class="field"><label>WhatsApp</label><input type="text" placeholder="+7..."></div>
+            <div class="field"><label>Телефон</label><input type="tel" inputmode="tel" autocomplete="tel" data-phone placeholder="+7 928 000-00-00" maxlength="18" required></div>
+            <div class="field"><label>WhatsApp</label><input type="tel" inputmode="tel" autocomplete="tel" data-phone placeholder="+7 928 000-00-00" maxlength="18"></div>
           </div>
           <div class="field"><label>Кратко о ситуации</label><textarea placeholder="Что беспокоит, есть ли анализы — пара предложений достаточно"></textarea></div>
 
@@ -326,7 +350,7 @@
 
   for (let i = 1; i <= 14; i++) {
     const d = new Date(today); d.setDate(today.getDate() + i);
-    const isWeekend = d.getDay() === 0 || d.getDay() === 6;
+    const dow = d.getDay(); // 0=Sun .. 5=Fri .. 6=Sat
     const el = document.createElement('div');
     el.className = 'date';
     el.innerHTML = `<small>${days[d.getDay()]}</small><strong>${d.getDate()}</strong><span>${months[d.getMonth()]}</span>`;
@@ -337,30 +361,37 @@
       el.classList.add('is-selected');
       selectedDate = el.dataset.label;
       selectedSlot = null;
-      renderSlots(isWeekend);
+      renderSlots(dow);
       updateSum();
     });
     datesEl.appendChild(el);
     if (i === 1) el.click();
   }
 
-  function renderSlots(isWeekend) {
+  // Friday 14:00–20:00 — in-person clinic hours, online slots are blocked.
+  // Every other day every slot is open.
+  const FRIDAY = 5;
+  const inPersonSlots = new Set(['14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15']);
+
+  function renderSlots(dow) {
     const all = ['10:00','10:45','11:30','12:15','14:00','14:45','15:30','16:15','17:00','17:45','18:30','19:15'];
     slotsEl.innerHTML = '';
-    all.forEach((t, i) => {
+    all.forEach((t) => {
       const s = document.createElement('div');
       s.className = 'slot';
       s.textContent = t;
-      // randomly disable a few to look real
-      const seed = (selectedDate + t).split('').reduce((a,c)=>a+c.charCodeAt(0),0);
-      const off = (seed % 5 === 0) || (isWeekend && i > 7);
-      if (off) s.classList.add('is-disabled');
-      else s.addEventListener('click', () => {
-        document.querySelectorAll('.slot').forEach(x => x.classList.remove('is-selected'));
-        s.classList.add('is-selected');
-        selectedSlot = t;
-        updateSum();
-      });
+      const off = dow === FRIDAY && inPersonSlots.has(t);
+      if (off) {
+        s.classList.add('is-disabled');
+        s.title = 'Очный приём в ГКБ № 20';
+      } else {
+        s.addEventListener('click', () => {
+          document.querySelectorAll('.slot').forEach(x => x.classList.remove('is-selected'));
+          s.classList.add('is-selected');
+          selectedSlot = t;
+          updateSum();
+        });
+      }
       slotsEl.appendChild(s);
     });
   }
@@ -379,6 +410,41 @@
     }
     document.getElementById('confirm').classList.add('is-on');
     setTimeout(() => { document.getElementById('confirm').scrollIntoView({behavior:'smooth', block:'nearest'}); }, 100);
+  });
+
+  // ---- Russian phone mask: +7 999 123-45-67 ----
+  // Strips non-digits, drops leading 7/8, formats as the user types.
+  function formatRuPhone(value) {
+    let digits = value.replace(/\D/g, '');
+    if (digits.startsWith('7') || digits.startsWith('8')) digits = digits.slice(1);
+    digits = digits.slice(0, 10);
+    let out = '+7';
+    if (digits.length > 0) out += ' ' + digits.slice(0, Math.min(3, digits.length));
+    if (digits.length >= 4) out += ' ' + digits.slice(3, Math.min(6, digits.length));
+    if (digits.length >= 7) out += '-' + digits.slice(6, Math.min(8, digits.length));
+    if (digits.length >= 9) out += '-' + digits.slice(8, 10);
+    return out;
+  }
+  document.querySelectorAll('input[data-phone]').forEach(input => {
+    input.addEventListener('focus', () => {
+      if (!input.value) input.value = '+7 ';
+    });
+    input.addEventListener('input', () => {
+      const cursorAtEnd = input.selectionStart === input.value.length;
+      const formatted = formatRuPhone(input.value);
+      input.value = formatted;
+      if (cursorAtEnd) input.setSelectionRange(formatted.length, formatted.length);
+    });
+    input.addEventListener('blur', () => {
+      // If user only triggered the prefill but typed nothing, clear it
+      if (input.value === '+7' || input.value === '+7 ') input.value = '';
+    });
+    // Prevent backspace from breaking the +7 prefix
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && input.selectionStart <= 3 && input.selectionEnd <= 3) {
+        e.preventDefault();
+      }
+    });
   });
 </script>
 </body>
