@@ -219,6 +219,73 @@
   line-height: 1;
 }
 .quote-block em { color: var(--teal); font-style: italic; }
+
+/* Surgical practice — accent section */
+.surg-band {
+  background: var(--sand);
+  border-radius: 22px;
+  padding: clamp(40px, 5vw, 72px) clamp(24px, 4vw, 56px);
+  position: relative;
+  overflow: hidden;
+}
+.surg-band::before {
+  content: "ОПЕРИРУЮЩИЙ ХИРУРГ";
+  position: absolute;
+  top: 18px; right: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--teal-deep);
+  opacity: 0.55;
+}
+.surg-band .principles { background: transparent; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(31,74,71,0.25); border-left: 1px solid rgba(31,74,71,0.25); margin-top: 32px; }
+@media (max-width: 1100px) { .surg-band .principles { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .surg-band .principles { grid-template-columns: 1fr; } }
+.surg-band .principle { background: rgba(255,255,255,0.4); border-right-color: rgba(31,74,71,0.25); border-bottom-color: rgba(31,74,71,0.25); }
+.surg-band .principle .num { color: var(--teal-deep); font-size: 13px; }
+.surg-band .principle h4 { color: var(--teal-deep); }
+.surg-band .principle p { color: var(--ink); }
+
+/* Doctor's letter — personal address */
+.letter {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: start;
+  max-width: 1000px;
+}
+@media (max-width: 800px) { .letter { grid-template-columns: 1fr; gap: 24px; } }
+.letter__aside {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 12px;
+  border-top: 2px solid var(--teal);
+}
+.letter__body p {
+  font-family: var(--font-serif);
+  font-size: clamp(20px, 2.1vw, 26px);
+  line-height: 1.45;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+.letter__body p:first-child::first-letter {
+  font-size: 1.5em;
+  color: var(--teal);
+}
+.letter__body p:last-of-type { margin-bottom: 32px; }
+.letter__sign {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.letter__sign strong { color: var(--teal-deep); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -409,6 +476,59 @@
 
 <section>
   <div class="container">
+    <div class="surg-band reveal">
+      <div class="section-head" style="margin-bottom: 8px;">
+        <div>
+          <span class="eyebrow eyebrow-dot" style="color: var(--teal-deep);">Оперативная урология · акцент практики</span>
+          <h2 style="font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); margin-top: 14px; color: var(--teal-deep);">Я оперирую — современная хирургия с малоинвазивным подходом.</h2>
+        </div>
+        <p style="color: var(--ink);">В клинической практике использую современные хирургические технологии: малоинвазивные и эндоскопические вмешательства. Это позволяет минимизировать травматичность, сократить срок восстановления и достичь высоких функциональных результатов. За плечами — 100+ проведённых операций в стационаре.</p>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <div class="num">100+</div>
+          <h4>Операций проведено</h4>
+          <p>Открытые и эндоскопические вмешательства в условиях стационара. Опыт ведения пациентов от поступления до выписки.</p>
+        </div>
+        <div class="principle">
+          <div class="num">Малоинвазивно</div>
+          <h4>Эндоурология и лапароскопия</h4>
+          <p>Эндоскопические и лапароскопические методы — меньше травматичность, короче реабилитация. ПК по эндоурологии, лапароскопии и рентген-эндоскопии.</p>
+        </div>
+        <div class="principle">
+          <div class="num">Спектр</div>
+          <h4>Урологическая хирургия</h4>
+          <p>МКБ, стриктуры уретры, заболевания предстательной железы, варикоцеле, гидроцеле, андрологические операции.</p>
+        </div>
+        <div class="principle">
+          <div class="num">Подход</div>
+          <h4>Операция — не первый ответ</h4>
+          <p>Сначала разбираемся, действительно ли вмешательство необходимо. Если да — объясняю риски, альтернативы и реабилитацию до того, как вы примете решение.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="letter reveal">
+      <div class="letter__aside">
+        Слово врача<br>лично от&nbsp;З.А.&nbsp;Мирзаева
+      </div>
+      <div class="letter__body">
+        <p>Вас приветствует Заур Айдинович Мирзаев, оперирующий врач-уролог. В клинической практике использую современные хирургические технологии, включая малоинвазивные и эндоскопические вмешательства — это позволяет минимизировать травматичность, сократить сроки восстановления и достигать высоких функциональных результатов.</p>
+        <p>Научная деятельность позволяет мне постоянно совершенствовать подходы к лечению, опираясь не только на собственный опыт, но и на актуальные мировые данные. Это даёт возможность выходить за рамки стандартных решений и подбирать оптимальную тактику в сложных клинических ситуациях.</p>
+        <p>Как хирург, я осознаю: за каждым вмешательством стоит доверие пациента, его волнения и страх. Моя задача — развеять страхи и сомнения, помочь осознанно принять решение и настроиться на успешный исход. Только при тесном взаимодействии и доверительном диалоге возможно достижение наилучших результатов.</p>
+        <p>Не стесняйтесь обращаться ко&nbsp;мне за помощью. Буду рад помочь.</p>
+        <div class="letter__sign">— <strong>Мирзаев Заур Айдинович</strong> · к.м.н., оперирующий врач-уролог · первая квалификационная категория</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
     <span class="eyebrow eyebrow-dot">Принципы работы</span>
     <div style="margin-top: 24px; margin-bottom: 56px;">
       <h2 style="font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); line-height: 1.05; max-width: 800px;">Три вещи, на которых держится мой приём.</h2>
@@ -430,44 +550,6 @@
         <p>Вы уходите с письменным заключением и чётким следующим шагом. Если непонятно — объясняю ещё раз и пишу в мессенджер.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-head" style="margin-bottom: 40px;">
-      <div>
-        <span class="eyebrow eyebrow-dot">Хирургическая практика</span>
-        <h2 style="font-family: var(--font-serif); font-size: clamp(36px, 4.5vw, 56px); margin-top: 14px;">Оперирующий хирург — не только консультирую, но и оперирую.</h2>
-      </div>
-      <p>За плечами более 100 проведённых операций в стационаре. Это значит: на приёме я понимаю, как болезнь выглядит изнутри, и трезво оцениваю — нужна ли вам операция вообще, и если да, то какая.</p>
-    </div>
-    <div class="principles" style="border-top: 1px solid var(--line); border-left: 1px solid var(--line);">
-      <div class="principle">
-        <div class="num">100+</div>
-        <h4>Операций проведено</h4>
-        <p>Открытые и эндоскопические вмешательства в условиях стационара. Опыт ведения пациентов от поступления до выписки.</p>
-      </div>
-      <div class="principle">
-        <div class="num">Спектр</div>
-        <h4>Урологическая хирургия</h4>
-        <p>Операции при МКБ, стриктурах уретры, заболеваниях предстательной железы, варикоцеле, гидроцеле и других урологических патологиях.</p>
-      </div>
-      <div class="principle">
-        <div class="num">Подход</div>
-        <h4>Операция — не первый ответ</h4>
-        <p>Сначала разбираемся, действительно ли вмешательство необходимо. Если да — объясняю риски, альтернативы и реабилитацию до того, как вы примете решение.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="quote-block reveal">
-      Я не лечу диагнозы — я помогаю людям. <em>Урология слишком часто связана со стыдом и страхом</em>, и моя работа — снять и то, и другое, прежде чем мы начнём разбираться с медицинской частью.
-    </div>
-    <div style="margin-top: 32px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">— З.А. Мирзаев</div>
   </div>
 </section>
 
