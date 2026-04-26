@@ -269,6 +269,11 @@
   backdrop-filter: blur(4px);
 }
 .surg-band .principles { background: transparent; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(31,74,71,0.25); border-left: 1px solid rgba(31,74,71,0.25); margin-top: 32px; }
+.surg-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+@media (max-width: 700px) { .surg-gallery { grid-template-columns: repeat(2, 1fr); } }
+.surg-gallery a { display: block; aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; cursor: zoom-in; position: relative; background: var(--teal-deep); }
+.surg-gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; display: block; }
+.surg-gallery a:hover img { transform: scale(1.04); }
 @media (max-width: 1100px) { .surg-band .principles { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .surg-band .principles { grid-template-columns: 1fr; } }
 .surg-band .principle { background: rgba(255,255,255,0.4); border-right-color: rgba(31,74,71,0.25); border-bottom-color: rgba(31,74,71,0.25); }
@@ -477,6 +482,17 @@
           <h4>Операция — не первый ответ</h4>
           <p>Сначала разбираемся, действительно ли вмешательство необходимо. Если да — объясняю риски, альтернативы и реабилитацию до того, как вы примете решение.</p>
         </div>
+      </div>
+      <div class="surg-gallery">
+        <a href="assets/img/surgey_2.png" data-lightbox aria-label="Открыть фото из операционной">
+          <img src="assets/img/surgey_2.png" alt="Мирзаев З.А. с ассистентами в операционной — лапароскопическая операция" loading="lazy">
+        </a>
+        <a href="assets/img/surgey_3.png" data-lightbox aria-label="Открыть фото из операционной">
+          <img src="assets/img/surgey_3.png" alt="Мирзаев З.А. за операцией — крупный план" loading="lazy">
+        </a>
+        <a href="assets/img/surgey_4.png" data-lightbox aria-label="Открыть фото из операционной">
+          <img src="assets/img/surgey_4.png" alt="Бригада в операционной — момент вмешательства" loading="lazy">
+        </a>
       </div>
     </div>
   </div>

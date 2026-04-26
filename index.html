@@ -258,6 +258,26 @@
   margin-top: 8px;
 }
 
+/* Operative urology feature on home */
+.op-feature {
+  display: grid;
+  grid-template-columns: minmax(300px, 480px) 1fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: stretch;
+  background: var(--teal-deep);
+  border-radius: 22px;
+  overflow: hidden;
+  color: #f0ece2;
+}
+@media (max-width: 900px) { .op-feature { grid-template-columns: 1fr; } }
+.op-feature__photo { display: block; aspect-ratio: 4/5; overflow: hidden; position: relative; }
+@media (max-width: 900px) { .op-feature__photo { aspect-ratio: 16/10; } }
+.op-feature__photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.op-feature__photo:hover img { transform: scale(1.04); }
+.op-feature__body { padding: clamp(32px, 4vw, 56px) clamp(28px, 4vw, 56px); display: flex; flex-direction: column; justify-content: center; }
+.op-feature__body h2 { font-family: var(--font-serif); font-size: clamp(32px, 4vw, 52px); line-height: 1.05; color: #f0ece2; margin-top: 14px; letter-spacing: -0.01em; }
+.op-feature__body p { color: #b9c8c5; margin-top: 18px; max-width: 540px; }
+
 .hero__portrait {
   position: relative;
   aspect-ratio: 4/5;
@@ -771,6 +791,22 @@
     </div>
     <div style="text-align:center; margin-top:48px;">
       <a href="reviews.html" class="btn btn--ghost">Все отзывы <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="op-feature reveal">
+      <a class="op-feature__photo" href="about.html#operative" aria-label="Подробнее об оперативной практике">
+        <img src="assets/img/surgey_2.png" alt="Мирзаев З.А. в операционной — оперирующий уролог" loading="lazy">
+      </a>
+      <div class="op-feature__body">
+        <span class="eyebrow eyebrow-dot" style="color: var(--sand);">Оперативная урология</span>
+        <h2>Я оперирую — а не только консультирую</h2>
+        <p>1000+ проведённых операций. Современные хирургические технологии: малоинвазивные и эндоскопические вмешательства. Меньше травматичность, короче реабилитация, выше функциональный результат.</p>
+        <a href="about.html" class="btn btn--lg" style="background: var(--sand); color: var(--teal-deep); margin-top: 20px;">Подробнее о враче <span class="arr">→</span></a>
+      </div>
     </div>
   </div>
 </section>
