@@ -491,6 +491,10 @@
       return;
     }
 
+    // Booking confirmed — surface success on the button itself so the
+    // patient sees a clear state change, not a frozen 'Отправляем…' label.
+    submitBtn.innerHTML = 'Запись подтверждена&nbsp;✓';
+
     // Email mirror — non-blocking
     sendBookingEmail({
       _subject: `Заявка · ${selectedDate} ${selectedSlot} · ${name}`,
