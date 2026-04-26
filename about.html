@@ -143,27 +143,44 @@
 .cv-org { font-size: 14px; color: var(--muted); margin-top: 6px; }
 .cv-desc { font-size: 14px; color: var(--ink-soft); margin-top: 10px; max-width: 600px; }
 
-.creds { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-@media (max-width: 800px) { .creds { grid-template-columns: repeat(2, 1fr); } }
+.creds { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (max-width: 720px) { .creds { grid-template-columns: 1fr; } }
 .cred {
-  aspect-ratio: 3/4;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background:
-    repeating-linear-gradient(135deg, rgba(31,74,71,0.05) 0 1px, transparent 1px 14px),
-    var(--bg-elevated);
-  padding: 18px;
+  background: var(--bg-elevated);
+  overflow: hidden;
   display: flex; flex-direction: column;
-  position: relative;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  cursor: zoom-in;
 }
-.cred .seal {
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: 2px solid var(--teal);
-  margin-bottom: auto;
+.cred:hover { transform: translateY(-3px); border-color: var(--teal); box-shadow: 0 12px 30px -18px rgba(31,74,71,0.45); }
+.cred__img {
+  aspect-ratio: 3/2;
+  background: #f4f1e8;
+  overflow: hidden;
+  display: block;
 }
-.cred h4 { font-family: var(--font-serif); font-size: 18px; line-height: 1.2; margin-top: 12px; }
-.cred span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--muted); margin-top: 6px; text-transform: uppercase; }
+.cred__img img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.cred__body { padding: 20px 22px 22px; border-top: 1px solid var(--line-soft); }
+.cred h4 { font-family: var(--font-serif); font-size: 22px; line-height: 1.2; }
+.cred span { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted); margin-top: 8px; text-transform: uppercase; display: block; }
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(15,30,29,0.92);
+  display: none; align-items: center; justify-content: center;
+  padding: 32px; cursor: zoom-out;
+}
+.lightbox.is-open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.lightbox__close {
+  position: absolute; top: 20px; right: 24px;
+  background: transparent; border: 0; color: #f0ece2;
+  font-size: 32px; cursor: pointer; line-height: 1;
+}
 
 .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
 @media (max-width: 800px) { .principles { grid-template-columns: 1fr; } }
@@ -284,12 +301,24 @@
       </div>
     </div>
     <div class="creds">
-      <div class="cred"><div class="seal"></div><h4>Диплом врача</h4><span>2016 · РостГМУ · лечебное дело</span></div>
-      <div class="cred"><div class="seal"></div><h4>Сертификат уролога</h4><span>2018 · ординатура</span></div>
-      <div class="cred"><div class="seal"></div><h4>Аспирантура</h4><span>2021 · клиническая медицина</span></div>
-      <div class="cred"><div class="seal"></div><h4>Кандидат мед. наук</h4><span>2022</span></div>
-      <div class="cred"><div class="seal"></div><h4>Хирургия стриктур уретры</h4><span>научные публикации</span></div>
-      <div class="cred"><div class="seal"></div><h4>Автор научных работ</h4><span>урология</span></div>
+      <a class="cred reveal" href="assets/img/diplom.png" data-lightbox>
+        <span class="cred__img"><img src="assets/img/diplom.png" alt="Диплом специалиста — Мирзаев З.А., РостГМУ, 2016, лечебное дело" loading="lazy"></span>
+        <span class="cred__body">
+          <h4>Диплом специалиста</h4>
+          <span>2016 · РостГМУ · лечебное дело · рег. №&nbsp;8560</span>
+        </span>
+      </a>
+      <a class="cred reveal" href="assets/img/image.png" data-lightbox>
+        <span class="cred__img"><img src="assets/img/image.png" alt="Диплом кандидата медицинских наук — Мирзаев З.А., 2022" loading="lazy"></span>
+        <span class="cred__body">
+          <h4>Кандидат медицинских наук</h4>
+          <span>2022 · серия КАН №&nbsp;023402 · приказ №&nbsp;609/нк-1</span>
+        </span>
+      </a>
+    </div>
+    <div class="lightbox" id="cred-lightbox" role="dialog" aria-modal="true" aria-label="Просмотр документа">
+      <button class="lightbox__close" type="button" aria-label="Закрыть">×</button>
+      <img src="" alt="">
     </div>
   </div>
 </section>
@@ -375,5 +404,26 @@
 <div id="site-floater"></div>
 <script src="assets/js/shared.js"></script>
 <script>DM.mount('about');</script>
+<script>
+(function(){
+  var lb = document.getElementById('cred-lightbox');
+  if (!lb) return;
+  var img = lb.querySelector('img');
+  var close = lb.querySelector('.lightbox__close');
+  document.querySelectorAll('a[data-lightbox]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      img.src = a.getAttribute('href');
+      img.alt = a.querySelector('img') ? a.querySelector('img').alt : '';
+      lb.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  function hide(){ lb.classList.remove('is-open'); img.src = ''; document.body.style.overflow = ''; }
+  lb.addEventListener('click', function(e){ if (e.target === lb || e.target === close) hide(); });
+  close.addEventListener('click', hide);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && lb.classList.contains('is-open')) hide(); });
+})();
+</script>
 </body>
 </html>
